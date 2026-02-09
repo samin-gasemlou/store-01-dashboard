@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+
+
+:root {
+  /* Brand */
+  --color-primary: #2B4168;
+
+  /* Text */
+  --color-text-main: #1C1E1F;
+
+  /* Background */
+  --color-bg-main: #f2f3f5;
+  --color-bg-soft: #FFFFFF;
+}
+
+
+/* ============================= */
+/* Utility Classes Using Variables */
+/* ============================= */
+
+/* Backgrounds */
+.bg-primary { background-color: var(--color-primary); }
+.bg-main { background-color: var(--color-bg-main); }
+.bg-soft { background-color: var(--color-bg-soft); }
+
+/* Text */
+.text-main { color: var(--color-text-main); }
+
+
