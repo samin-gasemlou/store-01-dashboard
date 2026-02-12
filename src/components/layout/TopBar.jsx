@@ -3,7 +3,7 @@ export default function TopBar() {
     <div
       className="
         w-full
-        mt-36
+        mt-26
         md:mt-40
         lg:mt-12
         bg-white

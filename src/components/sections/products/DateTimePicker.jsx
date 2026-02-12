@@ -12,10 +12,10 @@ export default function DateTimePicker({ label, value, onChange }) {
   };
 
   return (
-    <div className="flex flex-col gap-1 sm:gap-2 w-full text-xs sm:text-sm md:text-[13px] sm:w-61.25">
-      <label className="text-xs sm:text-sm md:text-[13px] font-medium text-right py-2">
-{label}</label>
-      <div className="h-11 sm:h-13.75 px-3 sm:px-4 rounded-xl border border-[#0000004D] flex items-center justify-between text-xs sm:text-sm text-right w-full bg-[#ffffff]">
+    <div className="flex flex-col gap-1 sm:gap-2 w-full min-w-0 text-xs sm:text-sm md:text-[13px]">
+      <label className="text-xs sm:text-sm md:text-[13px] font-medium text-right py-2">{label}</label>
+
+      <div className="h-11 sm:h-13.75 px-3 sm:px-4 rounded-xl border border-[#0000004D] flex items-center justify-between text-xs sm:text-sm text-right w-full min-w-0 bg-[#ffffff]">
         <DatePicker
           selected={startDate}
           onChange={handleChange}

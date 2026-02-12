@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout topbar={<TopBar />} sidebar={<Sidebar />}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 md:gap-6 gap-0 md:mb-6 mb-4 lg:mt-6 md:mt-20 mt-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 md:gap-6 gap-0 md:mb-6 mb-4 lg:mt-6 md:mt-20 mt-12">
         {stats.map(stat => (
           <StatCard
             key={stat.id}

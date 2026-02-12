@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { Settings, Trash2, ChevronDown } from "lucide-react";
+import { Settings, Trash2 } from "lucide-react";
 
-export default function OrderRow({ order, onDelete, onSettings }) {
-  const [open, setOpen] = useState(false);
-
+export default function OrderRow({ order, onDelete, onOpenDetails }) {
   const getStatusColor = (status) => {
     switch (status) {
       case "تکمیل شده":
@@ -19,86 +16,56 @@ export default function OrderRow({ order, onDelete, onSettings }) {
 
   return (
     <>
-      {/* ================= DESKTOP ================= */}
-      <div className="hidden md:flex flex-row justify-between text-right items-center py-4 text-sm border-b-2 border-b-[#0000000D]">
-        <div className="flex gap-3">
-          <button onClick={onSettings}>
+      {/* ================= DESKTOP (md+) ================= */}
+      <div className="hidden md:grid grid-cols-6 items-center py-4 text-sm border-b-2 border-b-[#0000000D] text-center px-4">
+        {/* عملیات */}
+        <div className="flex items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={onOpenDetails}
+            className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-gray-100"
+          >
             <Settings size={16} />
           </button>
-          <button onClick={onDelete}>
+
+          <button
+            type="button"
+            onClick={onDelete}
+            className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-gray-100"
+          >
             <Trash2 size={16} className="text-red-500" />
           </button>
         </div>
 
-        <span className="font-medium">#{order.id}</span>
-        <span>{order.invoice}</span>
+        <div className="flex items-center justify-center font-medium">#{order.id}</div>
+        <div className="flex items-center justify-center">{order.invoice}</div>
 
-        <span className={`px-2 py-1 rounded-lg font-bold ${getStatusColor(order.status)}`}>
+        <div className="flex items-center justify-center">
+          <span className={`px-3 py-1 rounded-lg font-bold inline-flex items-center justify-center ${getStatusColor(order.status)}`}>
+            {order.status}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-center">{order.date}</div>
+        <div className="flex items-center justify-center">{order.customer}</div>
+      </div>
+
+      {/* ================= MOBILE (<md) ================= */}
+      <button
+        type="button"
+        onClick={onOpenDetails}
+        className="md:hidden w-full flex items-center justify-between py-4 px-4 border-b border-[#0000000D]"
+      >
+        {/* وضعیت */}
+        <span className={`px-3 py-1 rounded-lg font-bold text-xs inline-flex items-center justify-center ${getStatusColor(order.status)}`}>
           {order.status}
         </span>
 
-        <span>{order.date}</span>
-        <span>{order.customer}</span>
-      </div>
-
-      {/* ================= MOBILE / TABLET ================= */}
-      <div className="md:hidden border-b border-[#0000000D]">
-        {/* Header */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-full flex justify-between items-center py-4 text-sm font-medium"
-        >
-          <div className="flex flex-col text-right">
-            <span>{order.customer}</span>
-            <span className="text-xs text-gray-400">#{order.id}</span>
-          </div>
-
-          <ChevronDown
-            size={18}
-            className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-          />
-        </button>
-
-        {/* Content */}
-        <div
-          className={`grid transition-all duration-300 ease-in-out ${
-            open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-          }`}
-        >
-          <div className="overflow-hidden text-xs space-y-3 pb-4">
-            
-            <div className="flex justify-between">
-              <span>{order.invoice}</span>
-              <span className="font-semibold">:مجموع فاکتور</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span className={`px-2 py-1 rounded-lg font-bold ${getStatusColor(order.status)}`}>
-                {order.status}
-              </span>
-              <span className="font-semibold">:وضعیت سفارش</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span>{order.date}</span>
-              <span className="font-semibold">:تاریخ</span>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <div className="flex gap-3">
-                <button onClick={onSettings}>
-                  <Settings size={16} />
-                </button>
-                <button onClick={onDelete}>
-                  <Trash2 size={16} className="text-red-500" />
-                </button>
-              </div>
-              <span className="font-semibold">:عملیات</span>
-            </div>
-
-          </div>
-        </div>
-      </div>
+        {/* نام کاربر */}
+        <span className="text-sm font-medium text-slate-800 text-right">
+          {order.customer}
+        </span>
+      </button>
     </>
   );
 }

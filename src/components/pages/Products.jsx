@@ -18,7 +18,7 @@ export default function Products() {
 
   return (
     <DashboardLayout topbar={<TopBar />} sidebar={<Sidebar />}>
-      <div className="bg-white rounded-2xl shadow-sm p-6 lg:mt-12 md:mt-24 mt-20">
+      <div className="bg-white rounded-[20px] shadow-sm p-6 lg:mt-12 md:mt-24 mt-20">
         <ProductsTable products={products} setProducts={setProducts} />
       </div>
     </DashboardLayout>

@@ -1,14 +1,17 @@
+import { useState } from "react";
 import CategoryRow from "../categories/CategoryRow";
 import MobileBrandRow from "./MobileBrandRow";
+import EditBrandModal from "../../modals/EditBrandModal";
 
 const rows = Array.from({ length: 8 });
 
 export default function BrandsTable() {
+  const [editOpen, setEditOpen] = useState(false);
+
   return (
     <div className="bg-white border border-[#0000000D] rounded-2xl shadow-sm p-6">
-
       <h2 className="text-right text-[#273959] font-bold text-[20px] mb-6">
-        لیست دسته بندی ها
+        لیست برند ها
       </h2>
 
       {/* DESKTOP */}
@@ -20,14 +23,14 @@ export default function BrandsTable() {
           </div>
 
           <div className="flex gap-12">
-            <span>نام دسته بندی</span>
-            <span>تصویر دسته بندی</span>
+            <span>نام برند</span>
+            <span>تصویر برند</span>
           </div>
         </div>
 
         <div className="divide-y px-4">
           {rows.map((_, i) => (
-            <CategoryRow key={i} />
+            <CategoryRow key={i} onEdit={() => setEditOpen(true)} />
           ))}
         </div>
       </div>
@@ -35,10 +38,12 @@ export default function BrandsTable() {
       {/* MOBILE & TABLET */}
       <div className="block md:hidden space-y-3">
         {rows.map((_, i) => (
-          <MobileBrandRow key={i} />
+          <MobileBrandRow key={i} onEdit={() => setEditOpen(true)} />
         ))}
       </div>
 
+      {/* ✅ Edit Brand Modal */}
+      <EditBrandModal isOpen={editOpen} onClose={() => setEditOpen(false)} />
     </div>
   );
 }

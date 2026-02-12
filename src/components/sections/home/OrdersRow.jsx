@@ -1,14 +1,14 @@
 export default function OrdersRow({ order }) {
   const getStatusColor = (status) => {
     switch (status) {
-      case "تکمیل شده":
-        return "text-[#0D9747] bg-[#E7F8F0]";
-      case "در انتظار":
-        return "text-[#F2994A] bg-[#FFF8ED]";
-      case "لغو شده":
-        return "text-[#EB5757] bg-[#FFF0F0]";
+      case "complete":
+        return "text-[#0D9747] border-r-4 border-r-[#0D9747]";
+      case "pending":
+        return "text-[#DDB802] border-r-4 border-r-[#DDB802]";
+      case "rejected":
+        return "text-[#E93232] border-r-4 border-r-[#E93232]";
       default:
-        return "text-[#273959] bg-[#F2F3F5]";
+        return "text-[#273959] border-r-4 border-r-[#273959]";
     }
   };
 
@@ -33,7 +33,7 @@ export default function OrdersRow({ order }) {
       {/* وضعیت */}
       <td className="py-2 sm:py-3 md:py-4 text-right  px-2">
         <span
-          className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg font-bold
+          className={`px-2 sm:px-3 py-1 sm:py-1.5  font-bold
           text-[10px] sm:text-[12px] md:text-xs
           ${getStatusColor(order.status)}`}
         >

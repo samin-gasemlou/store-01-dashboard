@@ -22,26 +22,21 @@ export default function ImageUploader({ value, onChange }) {
   };
 
   return (
-    <div className="flex flex-col gap-2 w-full sm:w-77">
-     <label className="text-xs sm:text-sm md:text-[14px] font-medium text-right py-2">
-:انتخاب عکس</label>
+    <div className="flex flex-col gap-2 w-full min-w-0">
+      <label className="text-xs sm:text-sm md:text-[14px] font-medium text-right py-2">:انتخاب عکس</label>
 
       <div
-        className="h-32 sm:h-39 w-full sm:w-76.75 rounded-[10px] border border-[#3d5395] bg-[#F0F4FF] flex flex-col items-center justify-center text-[#5776D4] gap-2 relative"
+        className="h-32 sm:h-39 w-full rounded-[10px] border border-[#3d5395] bg-[#F0F4FF] flex flex-col items-center justify-center text-[#5776D4] gap-2 relative"
         onClick={() => fileInputRef.current.click()}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
         {preview ? (
-          <img
-            src={preview}
-            alt="preview"
-            className="h-full w-full object-contain rounded-[10px]"
-          />
+          <img src={preview} alt="preview" className="h-full w-full object-contain rounded-[10px]" />
         ) : (
           <>
             <img src="/export.svg" alt="" />
-           <span className="text-xs sm:text-sm md:text-[14px] text-center">
+            <span className="text-xs sm:text-sm md:text-[14px] text-center">
               تصویر را بکشید و رها کنید یا کلیک کنید
             </span>
           </>

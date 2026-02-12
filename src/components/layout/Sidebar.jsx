@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import DiscountListModal from "../modals/DiscountListModal";
 
 const items = [
   { label: "پیشخوان", icon: "/home.svg", path: "/" },
@@ -7,8 +8,8 @@ const items = [
   { label: "سفارشات", icon: "/shopping-cart.svg", path: "/orders" },
   { label: "گزارشات", icon: "/chart.svg", path: "/reports" },
   { label: "کاربران", icon: "/user-white.svg", path: "/users" },
-  { label: "عمده فروشی", icon: "/people.svg", path: "/wholesale" },
-  { label: "تنظیمات سایت", icon: "/setting-5.svg", path: "/settings" },
+  { label: "عمده فروشی", icon: "/people.svg", path: "#" },
+  { label: "تنظیمات سایت", icon: "/setting-5.svg", path: "#" },
   { label: "کد تخفیف", icon: "/medal-star.svg", path: "/discounts" },
 ];
 
@@ -23,15 +24,22 @@ export default function Sidebar() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
 
+  // ✅ state مودال کد تخفیف
+  const [discountModalOpen, setDiscountModalOpen] = useState(false);
+
   return (
     <>
       {/* ================= Desktop Sidebar ================= */}
-      <aside className="hidden lg:block h-full sticky top-6 rounded-t-[20px] bg-linear-to-b from-[#24344F] to-[#2B4168] text-white px-4 py-8">
+      <aside className="hidden lg:block h-screen sticky top-6 rounded-t-[20px] bg-linear-to-b from-[#24344F] to-[#2B4168] text-white px-4 py-8">
         <h1 className="text-3xl font-extrabold text-center mb-10">
           01<span className="ml-1">STORE</span>
         </h1>
 
-        <SidebarContent location={location} onNavigate={() => {}} />
+        <SidebarContent
+          location={location}
+          onNavigate={() => {}}
+          onOpenDiscountModal={() => setDiscountModalOpen(true)}
+        />
       </aside>
 
       {/* ================= Mobile & Tablet Menu ================= */}
@@ -46,27 +54,29 @@ export default function Sidebar() {
         className={`
           lg:hidden
           fixed
-          top-20
-          right-4
-          left-4
+          top-18
           z-50
           rounded-2xl
           bg-linear-to-b from-[#24344F] to-[#2B4168]
           text-white
           px-4
           py-6
-          transition
+          transition w-full
           ${open ? "block" : "hidden"}
         `}
       >
         <SidebarContent
           location={location}
           onNavigate={() => setOpen(false)}
+          onOpenDiscountModal={() => {
+            setOpen(false);
+            setDiscountModalOpen(true);
+          }}
         />
       </aside>
 
       {/* Floating Top Bar */}
-      <div className="lg:hidden fixed top-2 right-4 left-4 z-50">
+      <div className="lg:hidden fixed w-full z-50 top-2">
         <div className="flex items-center justify-between px-5 py-3 rounded-2xl bg-linear-to-b from-[#24344F] to-[#2B4168] text-white shadow-lg">
           <button
             onClick={() => setOpen(!open)}
@@ -80,34 +90,54 @@ export default function Sidebar() {
           </h1>
         </div>
       </div>
+
+      {/* ✅ Discount Modal */}
+      <DiscountListModal
+        isOpen={discountModalOpen}
+        onClose={() => setDiscountModalOpen(false)}
+      />
     </>
   );
 }
 
 /* ================= Shared Sidebar Content ================= */
-function SidebarContent({ location, onNavigate }) {
+function SidebarContent({ location, onNavigate, onOpenDiscountModal }) {
   return (
     <nav className="space-y-3">
       {items.map((i) => {
+        const isProducts = i.path === "/products";
+        const isDiscount = i.path === "/discounts";
+
         const isActive =
           location.pathname === i.path ||
           location.pathname.startsWith(i.path + "/");
 
-        const isProducts = i.path === "/products";
+        const itemClass = `
+          w-full flex items-center justify-end gap-2 px-4 py-3 rounded-xl text-sm transition
+          ${isActive ? "bg-[#FFFFFF4D]" : "bg-[#FFFFFF0D] hover:bg-[#FFFFFF4D]"}
+        `;
 
         return (
           <div key={i.path}>
-            <Link
-              to={i.path}
-              onClick={onNavigate}
-              className={`
-                w-full flex items-center justify-end gap-2 px-4 py-3 rounded-xl text-sm transition
-                ${isActive ? "bg-[#FFFFFF4D]" : "bg-[#FFFFFF0D] hover:bg-[#FFFFFF4D]"}
-              `}
-            >
-              <span>{i.label}</span>
-              <img src={i.icon} alt="" />
-            </Link>
+            {/* ✅ فقط کد تخفیف مودال باز می‌کند */}
+            {isDiscount ? (
+              <button
+                type="button"
+                onClick={() => {
+                  onNavigate?.();
+                  onOpenDiscountModal?.();
+                }}
+                className={itemClass}
+              >
+                <span>{i.label}</span>
+                <img src={i.icon} alt="" />
+              </button>
+            ) : (
+              <Link to={i.path} onClick={onNavigate} className={itemClass}>
+                <span>{i.label}</span>
+                <img src={i.icon} alt="" />
+              </Link>
+            )}
 
             {isProducts && isActive && (
               <div className="mt-2 mr-6 space-y-2 flex flex-col items-end">

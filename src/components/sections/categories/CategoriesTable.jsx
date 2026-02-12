@@ -1,12 +1,15 @@
+import { useState } from "react";
 import CategoryRow from "./CategoryRow";
 import MobileCategoryRow from "./MobileCategoryRow";
+import EditCategoryModal from "../../modals/EditCategoryModal";
 
 const rows = Array.from({ length: 8 });
 
 export default function CategoriesTable() {
+  const [editOpen, setEditOpen] = useState(false);
+
   return (
     <div className="bg-white border border-[#0000000D] rounded-2xl shadow-sm p-4 sm:p-6">
-
       <h2 className="text-right text-[#273959] font-bold text-[18px] sm:text-[20px] mb-4 sm:mb-6">
         لیست دسته بندی ها
       </h2>
@@ -26,7 +29,7 @@ export default function CategoriesTable() {
 
         <div className="divide-y px-4">
           {rows.map((_, i) => (
-            <CategoryRow key={i} />
+            <CategoryRow key={i} onEdit={() => setEditOpen(true)} />
           ))}
         </div>
       </div>
@@ -34,10 +37,12 @@ export default function CategoriesTable() {
       {/* MOBILE & TABLET */}
       <div className="block md:hidden space-y-3">
         {rows.map((_, i) => (
-          <MobileCategoryRow key={i} />
+          <MobileCategoryRow key={i} onEdit={() => setEditOpen(true)} />
         ))}
       </div>
 
+      {/* ✅ Edit Modal */}
+      <EditCategoryModal isOpen={editOpen} onClose={() => setEditOpen(false)} />
     </div>
   );
 }
