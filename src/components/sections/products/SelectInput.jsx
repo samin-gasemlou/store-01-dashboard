@@ -1,8 +1,14 @@
-import { useState } from "react";
+// dashboard/src/components/sections/products/SelectInput.jsx
+import { useEffect, useState } from "react";
 
-export default function SelectInput({ label, value, options = [], onChange }) {
+export default function SelectInput({ label, value = "", options = [], onChange }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(value || "");
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSelected(value || "");
+  }, [value]);
 
   const handleSelect = (option) => {
     setSelected(option);
@@ -12,7 +18,9 @@ export default function SelectInput({ label, value, options = [], onChange }) {
 
   return (
     <div className="flex flex-col gap-1 sm:gap-2 text-right w-full min-w-0 relative">
-      <label className="text-xs sm:text-sm md:text-[13px] font-medium text-right py-2">{label}</label>
+      <label className="text-xs sm:text-sm md:text-[13px] font-medium text-right py-2">
+        {label}
+      </label>
 
       <div
         onClick={() => setOpen((p) => !p)}
@@ -26,7 +34,7 @@ export default function SelectInput({ label, value, options = [], onChange }) {
         <div className="absolute top-full mt-1 w-full bg-white border border-[#0000004D] rounded-xl shadow-lg z-10 max-h-48 overflow-auto">
           {options.map((option, i) => (
             <div
-              key={i}
+              key={`${option}-${i}`}
               onClick={() => handleSelect(option)}
               className="px-3 py-2 text-right text-xs sm:text-sm md:text-[13px] hover:bg-gray-100 cursor-pointer"
             >

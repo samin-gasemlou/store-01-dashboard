@@ -1,15 +1,38 @@
-import { topProducts } from "./topProductsData";
+// dashboard/src/components/sections/home/TopProductsD.jsx
+import { useEffect, useState } from "react";
+import { fetchTopProducts } from "../../../lib/dashboardApi.js";
+import { topProducts as mockTopProducts } from "./topProductsData";
 
-export default function TopProducts({ data = topProducts }) {
+export default function TopProducts() {
+  const [data, setData] = useState(mockTopProducts);
+
+  useEffect(() => {
+    let alive = true;
+
+    (async () => {
+      try {
+        const rows = await fetchTopProducts(10);
+        if (alive && Array.isArray(rows) && rows.length) setData(rows);
+      } catch (e) {
+        console.error("fetchTopProducts failed:", e);
+        // اگر API آماده نبود، همون mock می‌مونه
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   const exportToExcel = () => {
     const headers = ["عنوان", "تعداد فروش"];
-    const rows = data.map(item => [item.title, item.count]);
+    const rows = data.map((item) => [item.title, item.count]);
 
     let csvContent =
       "data:text/csv;charset=utf-8," +
       headers.join(",") +
       "\n" +
-      rows.map(e => e.join(",")).join("\n");
+      rows.map((e) => e.join(",")).join("\n");
 
     const link = document.createElement("a");
     link.href = encodeURI(csvContent);
@@ -38,7 +61,7 @@ export default function TopProducts({ data = topProducts }) {
       </div>
 
       <ul className="space-y-4">
-        {data.map(item => (
+        {data.map((item) => (
           <li
             key={item.id}
             className="flex items-center justify-between border-b border-b-[#0000000D] pb-3 last:border-none"

@@ -1,16 +1,11 @@
 import { useState } from "react";
 import OrderRow from "./OrderRow";
 import OrderDetailsModal from "../../modals/OrderDetailsModal";
-
-const mockOrders = [
-  { id: 5688, invoice: "1,450,000 IQD", status: "در انتظار بررسی", date: "۱۴۰۴/۵/۳۰", customer: "مریم فداکار" },
-  { id: 5689, invoice: "2,300,000 IQD", status: "تکمیل شده", date: "۱۴۰۴/۵/۲۹", customer: "علی رضایی" },
-  { id: 5690, invoice: "980,000 IQD", status: "لغو شده", date: "۱۴۰۴/۵/۲۸", customer: "سارا احمدی" },
-  { id: 5691, invoice: "3,200,000 IQD", status: "در انتظار بررسی", date: "۱۴۰۴/۵/۲۷", customer: "سارا احمدی" },
-];
+import { fetchOrderById } from "../../../services/orders.service";
+import { useOrders } from "../../../hooks/useOrders";
 
 export default function OrdersTable() {
-  const [orders, setOrders] = useState(mockOrders);
+  const { orders, setOrders } = useOrders();
 
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -21,9 +16,39 @@ export default function OrdersTable() {
     }
   };
 
-  const openDetails = (order) => {
-    setSelectedOrder(order);
-    setDetailsOpen(true);
+  const openDetails = async (order) => {
+    try {
+      const full = await fetchOrderById(order.id);
+
+      const normalizedForModal = {
+        id: full._id || order.id,
+        invoice: full.total
+          ? `${Number(full.total).toLocaleString()} IQD`
+          : (order.invoice || "-"),
+        status: full.status || order.status,
+        date: full.createdAt
+          ? new Date(full.createdAt).toLocaleDateString("fa-IR")
+          : (order.date || "-"),
+        customer: full.userId
+          ? `${full.userId.firstName || ""} ${full.userId.lastName || ""}`.trim() ||
+            full.userId.phone1 ||
+            "-"
+          : (order.customer || "-"),
+        items: full.items || [],
+        user: full.userId || null,
+        address: full.address,
+        city: full.city,
+        shippingCost: full.shippingCost,
+        discount: full.discount,
+        promoCode: full.promoCode,
+      };
+
+      setSelectedOrder(normalizedForModal);
+      setDetailsOpen(true);
+    } catch (e) {
+      console.error(e);
+      alert("خطا در دریافت جزئیات سفارش");
+    }
   };
 
   return (

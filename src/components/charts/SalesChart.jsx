@@ -1,18 +1,50 @@
-import { useMemo } from "react";
+// dashboard/src/components/charts/SalesChart.jsx
+import { useEffect, useMemo, useState } from "react";
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 
+import { fetchSalesLast7Days } from "../../lib/dashboardApi.js";
+
 export default function SalesChart() {
-  const data = useMemo(() => ([
-    { day: "شنبه", value: 2800000 },
-    { day: "یکشنبه", value: 3000000 },
-    { day: "دوشنبه", value: 3100000 },
-    { day: "سه‌شنبه", value: 3300000 },
-    { day: "چهارشنبه", value: 3700000 },
-    { day: "پنج‌شنبه", value: 8500000 },
-    { day: "جمعه", value: 7000000 },
-  ]), []);
+  const fallback = useMemo(
+    () => [
+      { day: "شنبه", value: 2800000 },
+      { day: "یکشنبه", value: 3000000 },
+      { day: "دوشنبه", value: 3100000 },
+      { day: "سه‌شنبه", value: 3300000 },
+      { day: "چهارشنبه", value: 3700000 },
+      { day: "پنج‌شنبه", value: 8500000 },
+      { day: "جمعه", value: 7000000 },
+    ],
+    []
+  );
+
+  const [data, setData] = useState(fallback);
+
+  useEffect(() => {
+    let alive = true;
+
+    (async () => {
+      try {
+        const rows = await fetchSalesLast7Days();
+        if (!alive) return;
+        if (Array.isArray(rows) && rows.length) setData(rows);
+      } catch (e) {
+        console.error("fetchSalesLast7Days failed:", e);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [fallback]);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 text-right">
@@ -20,7 +52,7 @@ export default function SalesChart() {
         نمودار فروش 7 روز گذشته
       </h3>
 
-      <div className="h-65 text-[12px]">
+      <div className="h-[260px] sm:h-[320px] text-[12px] min-w-0">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>

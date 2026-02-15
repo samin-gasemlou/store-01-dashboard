@@ -6,7 +6,7 @@ import OrdersTable from "../sections/orders/OrdersTable";
 export default function Orders() {
   return (
     <DashboardLayout topbar={<TopBar />} sidebar={<Sidebar />}>
-      <div className="bg-white rounded-2xl shadow-sm p-6 mt-20 md:mt-24 lg:mt-12">
+      <div className="bg-white rounded-2xl shadow-sm p-6 mt-16 md:mt-24 lg:mt-12">
         <OrdersTable />
         
       </div>

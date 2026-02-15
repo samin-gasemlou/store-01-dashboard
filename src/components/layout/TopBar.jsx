@@ -1,4 +1,21 @@
+// dashboard/src/components/layout/TopBar.jsx
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { getAdminUser, logout } from "../../lib/auth.js";
+
 export default function TopBar() {
+  const nav = useNavigate();
+
+  const name = useMemo(() => {
+    const u = getAdminUser();
+    return u?.name || u?.email || "—";
+  }, []);
+
+  const onLogout = () => {
+    logout();
+    nav("/login", { replace: true });
+  };
+
   return (
     <div
       className="
@@ -18,7 +35,10 @@ export default function TopBar() {
       "
     >
       <div className="flex items-center gap-2 shrink-0">
-        <button className="w-10 h-10 flex items-center justify-center text-gray-600">
+        <button
+          onClick={onLogout}
+          className="w-10 h-10 flex items-center justify-center text-gray-600"
+        >
           <img src="/log-out.svg" alt="" />
         </button>
 
@@ -39,7 +59,7 @@ export default function TopBar() {
             md:text-[13px]
           "
         >
-          امیرحسین قویدل
+          {name}
           <img src="/user.svg" alt="" />
         </div>
       </div>

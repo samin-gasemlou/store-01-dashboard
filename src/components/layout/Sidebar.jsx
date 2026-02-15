@@ -23,8 +23,6 @@ const productsSubmenu = [
 export default function Sidebar() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
-
-  // ✅ state مودال کد تخفیف
   const [discountModalOpen, setDiscountModalOpen] = useState(false);
 
   return (
@@ -42,46 +40,55 @@ export default function Sidebar() {
         />
       </aside>
 
-      {/* ================= Mobile & Tablet Menu ================= */}
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="lg:hidden fixed inset-0 bg-black/40 z-40"
-        />
-      )}
+      {/* ================= Mobile & Tablet Backdrop ================= */}
+      <div
+        onClick={() => setOpen(false)}
+        className={`lg:hidden fixed inset-0 bg-black/40 z-40 transition-opacity ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      />
 
+      {/* ================= Mobile & Tablet Menu ================= */}
       <aside
         className={`
           lg:hidden
           fixed
-          top-18
           z-50
+          right-4 left-4
+          top-16
           rounded-2xl
           bg-linear-to-b from-[#24344F] to-[#2B4168]
           text-white
           px-4
-          py-6
-          transition w-full
-          ${open ? "block" : "hidden"}
+          py-4
+          shadow-2xl
+          transition-all
+          duration-300
+          origin-top
+          ${open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}
         `}
+        style={{
+          // ✅ ارتفاع منطقی برای جلوگیری از اسکرول صفحه
+          maxHeight: "calc(100dvh - 96px)",
+        }}
       >
-        <SidebarContent
-          location={location}
-          onNavigate={() => setOpen(false)}
-          onOpenDiscountModal={() => {
-            setOpen(false);
-            setDiscountModalOpen(true);
-          }}
-        />
+        {/* ✅ فقط داخل منو اسکرول بخورد */}
+        <div className="overflow-y-auto pr-1" style={{ maxHeight: "calc(100dvh - 140px)" }}>
+          <SidebarContent
+            location={location}
+            onNavigate={() => setOpen(false)}
+            onOpenDiscountModal={() => {
+              setOpen(false);
+              setDiscountModalOpen(true);
+            }}
+          />
+        </div>
       </aside>
 
-      {/* Floating Top Bar */}
-      <div className="lg:hidden fixed w-full z-50 top-2">
+      {/* ================= Floating Top Bar ================= */}
+      <div className="lg:hidden fixed top-2 right-4 left-4 z-50">
         <div className="flex items-center justify-between px-5 py-3 rounded-2xl bg-linear-to-b from-[#24344F] to-[#2B4168] text-white shadow-lg">
-          <button
-            onClick={() => setOpen(!open)}
-            className="text-2xl font-bold"
-          >
+          <button onClick={() => setOpen(!open)} className="text-2xl font-bold">
             ☰
           </button>
 
@@ -119,7 +126,6 @@ function SidebarContent({ location, onNavigate, onOpenDiscountModal }) {
 
         return (
           <div key={i.path}>
-            {/* ✅ فقط کد تخفیف مودال باز می‌کند */}
             {isDiscount ? (
               <button
                 type="button"

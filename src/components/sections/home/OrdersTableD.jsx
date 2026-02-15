@@ -1,15 +1,39 @@
-import { useState } from "react";
+// dashboard/src/components/sections/home/OrdersTableD.jsx
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import OrdersRow from "./OrdersRow";
-import { orders as mockOrders } from "./ordersData";
+import { fetchLatestOrders } from "../../../lib/dashboardApi.js";
 
 export default function OrdersTableD() {
-  const [orders] = useState(mockOrders);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   const handleViewAll = () => {
     navigate("/orders");
   };
+
+  useEffect(() => {
+    let alive = true;
+
+    (async () => {
+      try {
+        setLoading(true);
+        const rows = await fetchLatestOrders(10);
+        if (alive) setOrders(Array.isArray(rows) ? rows : []);
+      } catch (e) {
+        console.error("fetchLatestOrders failed:", e);
+        if (alive) setOrders([]);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <section className="bg-white rounded-2xl shadow-sm p-6 w-full">
@@ -30,7 +54,7 @@ export default function OrdersTableD() {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <tbody className="text-center">
-            {orders.map(order => (
+            {loading ? null : orders.map((order) => (
               <OrdersRow key={order.id} order={order} />
             ))}
           </tbody>

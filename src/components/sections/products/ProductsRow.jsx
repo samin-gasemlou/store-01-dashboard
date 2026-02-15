@@ -1,32 +1,48 @@
+// dashboard/src/components/sections/products/ProductsRow.jsx
 import { Trash2, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductsRow({ product, toggleActive, deleteProduct }) {
+export default function ProductsRow({
+  product,
+  toggleActive,
+  deleteProduct,
+  editProduct,
+}) {
   const navigate = useNavigate();
 
   const stockStatus =
-    product.stock === 0
-      ? "نا موجود"
-      : product.stock < 10
-      ? "کم"
-      : "موجود";
+    product.stock === 0 ? "نا موجود" : product.stock < 10 ? "کم" : "موجود";
 
-  const goToAddProduct = () => {
-    navigate("/products/add");
+  const goToEditProduct = () => {
+    if (typeof editProduct === "function") {
+      editProduct(product);
+      return;
+    }
+
+    navigate("/products/add", {
+      state: {
+        mode: "edit",
+        productId: product?.id,
+        product,
+      },
+    });
+  };
+
+  const onDelete = async () => {
+    if (!product?.id) return;
+    await deleteProduct(product.id);
   };
 
   return (
     <tr className="border-b-2 border-b-[#0000000D] last:border-none text-gray-700 text-[12px] sm:text-[13px] md:text-sm">
-      
       {/* ACTIONS */}
       <td className="py-2 sm:py-4 align-middle">
         <div className="flex items-center justify-start gap-3 px-2 h-full">
-          
-          <button onClick={goToAddProduct} className="flex items-center">
+          <button onClick={goToEditProduct} className="flex items-center">
             <Settings size={18} className="text-gray-600 cursor-pointer" />
           </button>
 
-          <button onClick={() => deleteProduct(product.id)} className="flex items-center">
+          <button onClick={onDelete} className="flex items-center">
             <Trash2 size={18} className="text-red-500 cursor-pointer" />
           </button>
 
@@ -42,7 +58,6 @@ export default function ProductsRow({ product, toggleActive, deleteProduct }) {
               }`}
             />
           </button>
-
         </div>
       </td>
 

@@ -5,7 +5,7 @@ import UsersTable from "../sections/users/UsersTable";
 export default function Users() {
   return (
     <DashboardLayout topbar={<TopBar />} sidebar={<Sidebar />}>
-      <div className="lg:mt-12 mt-22 md:mt-24">
+      <div className="lg:mt-12 mt-16 md:mt-24">
     <UsersTable />
 </div>
 

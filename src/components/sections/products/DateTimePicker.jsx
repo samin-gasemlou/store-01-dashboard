@@ -1,4 +1,5 @@
-import { useState } from "react";
+// dashboard/src/components/sections/products/DateTimePicker.jsx
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Calendar } from "lucide-react";
@@ -6,14 +7,21 @@ import { Calendar } from "lucide-react";
 export default function DateTimePicker({ label, value, onChange }) {
   const [startDate, setStartDate] = useState(value ? new Date(value) : null);
 
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setStartDate(value ? new Date(value) : null);
+  }, [value]);
+
   const handleChange = (date) => {
     setStartDate(date);
-    onChange(date);
+    if (onChange) onChange(date);
   };
 
   return (
     <div className="flex flex-col gap-1 sm:gap-2 w-full min-w-0 text-xs sm:text-sm md:text-[13px]">
-      <label className="text-xs sm:text-sm md:text-[13px] font-medium text-right py-2">{label}</label>
+      <label className="text-xs sm:text-sm md:text-[13px] font-medium text-right py-2">
+        {label}
+      </label>
 
       <div className="h-11 sm:h-13.75 px-3 sm:px-4 rounded-xl border border-[#0000004D] flex items-center justify-between text-xs sm:text-sm text-right w-full min-w-0 bg-[#ffffff]">
         <DatePicker

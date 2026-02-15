@@ -1,3 +1,4 @@
+// dashboard/src/components/sections/home/OrdersRow.jsx
 export default function OrdersRow({ order }) {
   const getStatusColor = (status) => {
     switch (status) {
@@ -14,33 +15,25 @@ export default function OrdersRow({ order }) {
 
   return (
     <tr className="border-b border-b-[#0000000D] last:border-none hover:bg-gray-50 transition-colors">
-      
-      {/* ID */}
       <td className="py-2 sm:py-3 md:py-4 font-medium text-[#273959] text-[10px] sm:text-[13px] md:text-sm px-2">
         #{order.id}
       </td>
 
-      {/* مشتری */}
       <td className="py-2 sm:py-3 md:py-4 text-[#273959] font-medium text-[11px] sm:text-[13px] md:text-sm px-2">
         {order.customer || order.name}
       </td>
 
-      {/* قیمت */}
       <td className="py-2 sm:py-3 md:py-4 font-bold text-[#273959] text-[10px] sm:text-[13px] md:text-[12px] px-2">
         {order.price}
       </td>
 
-      {/* وضعیت */}
-      <td className="py-2 sm:py-3 md:py-4 text-right  px-2">
+      <td className="py-2 sm:py-3 md:py-4 text-right px-2">
         <span
-          className={`px-2 sm:px-3 py-1 sm:py-1.5  font-bold
-          text-[10px] sm:text-[12px] md:text-xs
-          ${getStatusColor(order.status)}`}
+          className={`px-2 sm:px-3 py-1 sm:py-1.5 font-bold text-[10px] sm:text-[12px] md:text-xs ${getStatusColor(order.status)}`}
         >
-          {order.status}
+          {order.statusLabel ?? order.status}
         </span>
       </td>
-
     </tr>
   );
 }
