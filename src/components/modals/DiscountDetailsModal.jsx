@@ -17,55 +17,62 @@ const DiscountDetailsModal = ({ isOpen, onClose, initialData, onSave }) => {
     const percentRaw = (fd.get("percent") || "").toString().trim().replace("%", "");
     const date = (fd.get("date") || "").toString().trim(); // YYYY-MM-DD
 
-    if (!name) return alert("نام تخفیف را وارد کنید");
-    if (!code) return alert("کد تخفیف را وارد کنید");
-    if (!percentRaw) return alert("درصد تخفیف را وارد کنید");
-    if (!date) return alert("تاریخ انقضا را انتخاب کنید");
+    if (!name) return alert("تکایە ناوی داشکاندن بنووسە");
+    if (!code) return alert("تکایە کۆدی داشکاندن بنووسە");
+    if (!percentRaw) return alert("تکایە ڕێژەی داشکاندن بنووسە");
+    if (!date) return alert("تکایە ڕێکەوتی بەسەرچوون هەڵبژێرە");
 
     const payload = {
       ...(initialData?.id ? { id: initialData.id } : {}),
       name,
       code,
       percent: `${percentRaw}%`,
-      date, // میلادی
+      date,
     };
 
     onSave?.(payload);
     onClose?.();
   };
 
-  // فقط اگر مقدار اولیه با فرمت YYYY-MM-DD بود، داخل date input نمایش میده
+  // ✅ FIX: ناو لە چەند فیلدێکی جیاوازدا
+  const initialName =
+    (initialData?.name || "").toString().trim() ||
+    (initialData?.title || "").toString().trim() ||
+    (initialData?.label || "").toString().trim() ||
+    "";
+
+  // ✅ FIX: ڕێکەوتی هاتوو بۆ dateInput (کە لە normalize دێت)
   const initialDateForInput =
-    typeof initialData?.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(initialData.date)
-      ? initialData.date
+    typeof initialData?.dateInput === "string" && /^\d{4}-\d{2}-\d{2}$/.test(initialData.dateInput)
+      ? initialData.dateInput
       : "";
 
   return (
     <BaseModal
       isOpen={isOpen}
       onClose={onClose}
-      title={initialData ? "ویرایش کد تخفیف" : "افزودن کد تخفیف"}
+      title={initialData ? "دەستکاریکردنی کۆدی داشکاندن" : "زیادکردنی کۆدی داشکاندن"}
       size="md"
     >
       <form key={formKey} onSubmit={handleSubmit} className="space-y-6">
         {/* Row 1: Name & Code */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700">نام تخفیف</label>
+            <label className="text-sm font-semibold text-slate-700">ناوی داشکاندن</label>
             <input
               name="name"
               type="text"
-              defaultValue={initialData?.name || ""}
+              defaultValue={initialName}  
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 text-right"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700">کد تخفیف</label>
+            <label className="text-sm font-semibold text-slate-700">کۆدی داشکاندن</label>
             <input
               name="code"
               type="text"
-              defaultValue={(initialData?.code || "").toUpperCase()}
+              defaultValue={(initialData?.code || "").toString().toUpperCase()}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 text-left uppercase"
             />
           </div>
@@ -74,7 +81,7 @@ const DiscountDetailsModal = ({ isOpen, onClose, initialData, onSave }) => {
         {/* Row 2: Date & Percentage */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700">درصد تخفیف</label>
+            <label className="text-sm font-semibold text-slate-700">ڕێژەی داشکاندن</label>
             <div className="relative">
               <input
                 name="percent"
@@ -89,16 +96,14 @@ const DiscountDetailsModal = ({ isOpen, onClose, initialData, onSave }) => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700">تاریخ انقضا</label>
+            <label className="text-sm font-semibold text-slate-700">ڕێکەوتی بەسەرچوون</label>
             <input
               name="date"
               type="date"
-              defaultValue={initialDateForInput}
+              defaultValue={initialDateForInput}  
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600 text-left"
             />
-            <p className="text-xs text-gray-500">
-              تاریخ از پنل انتخاب می‌شود (میلادی).
-            </p>
+            <p className="text-xs text-gray-500">ڕێکەوت لە پانێڵی هەڵبژاردن دیاری دەکرێت (میلادی).</p>
           </div>
         </div>
 
@@ -108,14 +113,14 @@ const DiscountDetailsModal = ({ isOpen, onClose, initialData, onSave }) => {
             type="submit"
             className="px-8 py-2.5 bg-slate-800 text-white rounded-lg hover:bg-slate-900 transition-colors"
           >
-            ذخیره
+            پاشەکەوتکردن
           </button>
           <button
             type="button"
             onClick={onClose}
             className="px-8 py-2.5 bg-slate-400 text-white rounded-lg hover:bg-slate-500 transition-colors"
           >
-            بستن
+            داخستن
           </button>
         </div>
       </form>

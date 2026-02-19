@@ -1,4 +1,3 @@
-// dashboard/src/components/pages/Dashboard.jsx
 import { useMemo, useEffect, useState } from "react";
 import DashboardLayout from "../layout/DashboardLayout";
 import TopBar from "../layout/TopBar";
@@ -16,32 +15,39 @@ export default function Dashboard() {
 
   const stats = useMemo(() => {
     const fallback = [
-      { id: 1, title: "سفارش جدید", value: 16, action: true },
-      { id: 2, title: "سود خالص امروز", value: "6,700,000 IQD" },
-      { id: 3, title: "فروش امروز", value: "13,900,000 IQD" },
+      { id: 1, title: "سفارشە نوێ", value: 16, action: true },
+      { id: 2, title: "قازانجی خالصی ئەمڕۆ", value: "6,700,000 IQD" },
+      { id: 3, title: "فرۆشی ئەمڕۆ", value: "13,900,000 IQD" },
     ];
 
     if (!statsApi) return fallback;
 
     return [
-      { id: 1, title: "سفارش جدید", value: statsApi.newOrders ?? 0, action: true },
-      { id: 2, title: "سود خالص امروز", value: `${Number(statsApi.netProfitToday ?? 0).toLocaleString()} IQD` },
-      { id: 3, title: "فروش امروز", value: `${Number(statsApi.salesToday ?? 0).toLocaleString()} IQD` },
+      { id: 1, title: "سفارشە نوێ", value: statsApi.newOrders ?? 0, action: true },
+      {
+        id: 2,
+        title: "قازانجی خالصی ئەمڕۆ",
+        value: `${Number(statsApi.netProfitToday ?? 0).toLocaleString()} IQD`,
+      },
+      {
+        id: 3,
+        title: "فرۆشی ئەمڕۆ",
+        value: `${Number(statsApi.salesToday ?? 0).toLocaleString()} IQD`,
+      },
     ];
   }, [statsApi]);
 
-useEffect(() => {
-  (async () => {
-    try {
-      const res = await apiClient("/health", { method: "GET" });
-      console.log("HEALTH:", res);
-    } catch (e) {
-      console.error(e);
-    }
-  })();
-}, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await apiClient("/health", { method: "GET" });
+        console.log("HEALTH:", res);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     let alive = true;
 

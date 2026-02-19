@@ -3,21 +3,21 @@ import { useState } from "react";
 import DiscountListModal from "../modals/DiscountListModal";
 
 const items = [
-  { label: "پیشخوان", icon: "/home.svg", path: "/" },
-  { label: "محصولات", icon: "/shop.svg", path: "/products" },
-  { label: "سفارشات", icon: "/shopping-cart.svg", path: "/orders" },
-  { label: "گزارشات", icon: "/chart.svg", path: "/reports" },
-  { label: "کاربران", icon: "/user-white.svg", path: "/users" },
-  { label: "عمده فروشی", icon: "/people.svg", path: "#" },
-  { label: "تنظیمات سایت", icon: "/setting-5.svg", path: "#" },
-  { label: "کد تخفیف", icon: "/medal-star.svg", path: "/discounts" },
+  { label: "پێشخان", icon: "/home.svg", path: "/" },
+  { label: "بەرهەمەکان", icon: "/shop.svg", path: "/products" },
+  { label: "سفارشەکان", icon: "/shopping-cart.svg", path: "/orders" },
+  { label: "ڕاپۆرتەکان", icon: "/chart.svg", path: "/reports" },
+  { label: "بەکارهێنەران", icon: "/user-white.svg", path: "/users" },
+  { label: "فرۆشتنی کۆمەڵ", icon: "/people.svg", path: "#" },
+  { label: "ڕێکخستنەکانی ماڵپەڕ", icon: "/setting-5.svg", path: "#" },
+  { label: "کۆدی داشکاندن", icon: "/medal-star.svg", path: "/discounts" },
 ];
 
 const productsSubmenu = [
-  { label: "همه محصولات", path: "/products" },
-  { label: "افزودن محصول", path: "/products/add" },
-  { label: "دسته‌بندی‌ها", path: "/products/categories" },
-  { label: "برندها", path: "/products/brands" },
+  { label: "هەموو بەرهەمەکان", path: "/products" },
+  { label: "زیادکردنی بەرهەم", path: "/products/add" },
+  { label: "پۆلەکان", path: "/products/categories" },
+  { label: "براندەکان", path: "/products/brands" },
 ];
 
 export default function Sidebar() {
@@ -68,11 +68,11 @@ export default function Sidebar() {
           ${open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}
         `}
         style={{
-          // ✅ ارتفاع منطقی برای جلوگیری از اسکرول صفحه
+          // ✅ بەرزی گونجاو بۆ ڕێگری لە سکرۆڵی پەڕە
           maxHeight: "calc(100dvh - 96px)",
         }}
       >
-        {/* ✅ فقط داخل منو اسکرول بخورد */}
+        {/* ✅ تەنها ناو منو سکرۆڵ بخوات */}
         <div className="overflow-y-auto pr-1" style={{ maxHeight: "calc(100dvh - 140px)" }}>
           <SidebarContent
             location={location}

@@ -1,21 +1,31 @@
 // dashboard/src/components/sections/home/TopProductsD.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchTopProducts } from "../../../lib/dashboardApi.js";
 import { topProducts as mockTopProducts } from "./topProductsData";
 
 export default function TopProducts() {
-  const [data, setData] = useState(mockTopProducts);
+  const [data, setData] = useState(Array.isArray(mockTopProducts) ? mockTopProducts : []);
+  const [loading, setLoading] = useState(true);
+
+  const rows = useMemo(() => {
+    const arr = Array.isArray(data) ? data : [];
+    return arr.slice(0, 6);
+  }, [data]);
 
   useEffect(() => {
     let alive = true;
 
     (async () => {
       try {
-        const rows = await fetchTopProducts(10);
-        if (alive && Array.isArray(rows) && rows.length) setData(rows);
+        setLoading(true);
+        const rowsApi = await fetchTopProducts(6);
+        if (alive && Array.isArray(rowsApi) && rowsApi.length) {
+          setData(rowsApi);
+        }
       } catch (e) {
         console.error("fetchTopProducts failed:", e);
-        // اگر API آماده نبود، همون mock می‌مونه
+      } finally {
+        if (alive) setLoading(false);
       }
     })();
 
@@ -25,14 +35,14 @@ export default function TopProducts() {
   }, []);
 
   const exportToExcel = () => {
-    const headers = ["عنوان", "تعداد فروش"];
-    const rows = data.map((item) => [item.title, item.count]);
+    const headers = ["ناونیشان", "ژمارەی فرۆشتن"];
+    const csvRows = rows.map((item) => [String(item.title ?? ""), String(item.count ?? 0)]);
 
-    let csvContent =
+    const csvContent =
       "data:text/csv;charset=utf-8," +
       headers.join(",") +
       "\n" +
-      rows.map((e) => e.join(",")).join("\n");
+      csvRows.map((r) => r.join(",")).join("\n");
 
     const link = document.createElement("a");
     link.href = encodeURI(csvContent);
@@ -50,26 +60,45 @@ export default function TopProducts() {
           className="flex items-center gap-2
           text-[12px] sm:text-[13px] md:text-sm
           px-4 py-2 rounded-[10px] bg-[#2A3E6326] text-[#2A3E63] border border-[#27375626]"
+          type="button"
+          disabled={!rows.length}
         >
           <img src="/import.svg" alt="" />
           Excel
         </button>
 
         <h3 className="text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-[#273959]">
-          کالاهای پرفروش
+          کاڵاکانی زۆرفرۆش
         </h3>
       </div>
 
+      {loading ? (
+        <div className="text-[#273959] text-[12px] sm:text-[13px] opacity-60">
+          لە حالەتی وەرگرتنی زانیاری...
+        </div>
+      ) : null}
+
       <ul className="space-y-4">
-        {data.map((item) => (
+        {rows.map((item, idx) => (
           <li
-            key={item.id}
+            key={String(item?.id ?? idx)}
             className="flex items-center justify-between border-b border-b-[#0000000D] pb-3 last:border-none"
           >
-            <span className="font-bold text-[13px] w-[50%]">{item.count} فروش</span>
-            <span className="font-bold text-[13px] text-right">{item.title}</span>
+            <span className="font-bold text-[12px] sm:text-[13px] md:text-[14px] w-[45%] whitespace-nowrap">
+              {Number(item?.count ?? 0).toLocaleString()} فرۆشتن
+            </span>
+
+            <span className="font-bold text-[12px] sm:text-[13px] md:text-[14px] text-right w-[55%] truncate">
+              {item?.title ?? "—"}
+            </span>
           </li>
         ))}
+
+        {!rows.length && !loading ? (
+          <li className="text-[#273959] text-[12px] sm:text-[13px] opacity-60">
+            هیچ داتایەک بۆ پیشاندان نییە
+          </li>
+        ) : null}
       </ul>
     </section>
   );

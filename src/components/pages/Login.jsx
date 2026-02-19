@@ -1,9 +1,8 @@
-// dashboard/src/components/pages/Login.jsx
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthCard from "../sections/auth/AuthCard";
 import AuthInput from "../sections/auth/AuthInput";
-import { api } from "../../api/client";
+import { api } from "../../lib/apiClient";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,14 +27,13 @@ export default function Login() {
         },
       });
 
-      // ✅ ساپورت چند شکل مختلف پاسخ بک
       const payload = res?.data ?? res ?? {};
       const accessToken = payload?.accessToken;
       const refreshToken = payload?.refreshToken;
       const user = payload?.user || payload?.admin || {};
 
       if (!accessToken) {
-        throw new Error("توکن از بک برنگشت (accessToken خالیه)");
+        throw new Error("توکن لە بک نەگەڕاوەتەوە (accessToken بەتاڵە)");
       }
 
       localStorage.setItem("accessToken", accessToken);
@@ -45,7 +43,7 @@ export default function Login() {
       const redirectTo = location.state?.from || "/";
       nav(redirectTo, { replace: true });
     } catch (e2) {
-      setErr(e2?.message || "Login failed");
+      setErr(e2?.message || "چوونەژوورەوە سەرکەوتوو نەبوو");
     } finally {
       setLoading(false);
     }
@@ -53,17 +51,17 @@ export default function Login() {
 
   return (
     <section className="min-h-screen w-full flex items-center justify-center px-4 py-10 bg-white">
-      <AuthCard title="Sign in">
+      <AuthCard title="چوونەژوورەوە">
         <form onSubmit={submit} className="space-y-5">
           <AuthInput
-            placeholder="Email"
+            placeholder="ئیمەیڵ"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <AuthInput
-            placeholder="Password"
+            placeholder="وشەی نهێنی"
             type="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
@@ -71,7 +69,7 @@ export default function Login() {
 
           <div className="pt-2">
             <Link to="/forgot" className="text-blue-600 text-[18px]">
-              Forget Password?
+              وشەی نهێنیت لەبیر کردووە؟
             </Link>
           </div>
 
@@ -93,13 +91,13 @@ export default function Login() {
               disabled:opacity-60
             "
           >
-            {loading ? "Loading..." : "Sign in"}
+            {loading ? "لە حال چالاکردن..." : "چوونەژوورەوە"}
           </button>
 
           <p className="text-center text-[18px] pt-2">
-            Don&apos;t have an account?{" "}
+            هەژمارت نییە؟{" "}
             <Link to="/signup" className="text-blue-600">
-              Go to Sign Up
+              بڕۆ بۆ درووستکردنی هەژمار
             </Link>
           </p>
         </form>

@@ -17,7 +17,7 @@ export const orders = [
     price: "2,390,000 IQD",
     status: "pending",
   },
-   {
+  {
     id: 1654,
     customer: "نیما جاوید",
     price: "2,390,000 IQD",

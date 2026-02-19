@@ -20,14 +20,18 @@ export default function UsersRow({ user, onOpen }) {
           transition
         "
       >
-        <span className="text-left whitespace-nowrap">{user.purchaseCount} عدد</span>
-        <span className="text-center whitespace-nowrap">{user.totalPurchase.toLocaleString()} IQD</span>
-        <span className="text-center whitespace-nowrap">{user.netProfit.toLocaleString()} IQD</span>
+        <span className="text-left whitespace-nowrap">{Number(user.purchaseCount || 0)} عدد</span>
+        <span className="text-center whitespace-nowrap">
+          {Number(user.totalPurchase || 0).toLocaleString()} IQD
+        </span>
+        <span className="text-center whitespace-nowrap">
+          {Number(user.netProfit || 0).toLocaleString()} IQD
+        </span>
         <span className="text-center whitespace-nowrap">{user.registerDate}</span>
         <span className="text-right font-medium">{user.username}</span>
       </button>
 
-      {/* ✅ MOBILE (<sm): فقط نام کاربر */}
+      {/* ✅ MOBILE (<sm): فقط ناو کاربر */}
       <button
         type="button"
         onClick={onOpen}

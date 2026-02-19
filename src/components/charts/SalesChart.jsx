@@ -10,9 +10,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { fetchSalesLast7Days } from "../../lib/dashboardApi.js";
+import { fetchReportsSummaryBySelectedDate } from "../../lib/reportsApi.js";
 
-export default function SalesChart() {
+export default function SalesChart({ selectedDate = "امروز" }) {
   const fallback = useMemo(
     () => [
       { day: "شنبه", value: 2800000 },
@@ -33,24 +33,26 @@ export default function SalesChart() {
 
     (async () => {
       try {
-        const rows = await fetchSalesLast7Days();
+        const res = await fetchReportsSummaryBySelectedDate(selectedDate);
         if (!alive) return;
+
+        const rows = res?.salesLast7Days;
         if (Array.isArray(rows) && rows.length) setData(rows);
+        else setData(fallback);
       } catch (e) {
-        console.error("fetchSalesLast7Days failed:", e);
+        console.error("fetch salesLast7Days failed:", e);
+        if (alive) setData(fallback);
       }
     })();
 
     return () => {
       alive = false;
     };
-  }, [fallback]);
+  }, [fallback, selectedDate]);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 text-right">
-      <h3 className="text-[20px] text-[#273959] font-semibold mb-4">
-        نمودار فروش 7 روز گذشته
-      </h3>
+     
 
       <div className="h-[260px] sm:h-[320px] text-[12px] min-w-0">
         <ResponsiveContainer width="100%" height="100%">

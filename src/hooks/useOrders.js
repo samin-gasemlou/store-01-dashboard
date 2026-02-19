@@ -1,4 +1,3 @@
-// dashboard/src/hooks/useOrders.js
 import { useEffect, useState, useTransition } from "react";
 import { fetchOrders } from "../services/orders.service.js";
 
@@ -10,36 +9,52 @@ function safeFaDate(d) {
   }
 }
 
+const statusLabelMap = {
+  PENDING: "لە انتظار بررسی",
+  ACCEPTED: "پذیرفته کراوە",
+  COMPLETE: "تکمیل کراوە",
+  CANCELED: "لغو کراوە",
+};
+
+function computeTotalFromItems(items) {
+  if (!Array.isArray(items)) return 0;
+  return items.reduce((sum, it) => {
+    const p = Number(it?.price ?? 0);
+    const q = Number(it?.quantity ?? 0);
+    return sum + p * q;
+  }, 0);
+}
+
 function normalizeOrderForUI(o) {
-  const id = o?._id || o?.id || o?.invoiceNumber || "-";
+  const id = String(o?._id || o?.id || "");
+  const invoiceNo = o?.invoiceNumber ? String(o.invoiceNumber) : id;
 
-  const invoice = o?.total != null
-    ? `${Number(o.total).toLocaleString()} IQD`
-    : (o?.invoiceNumber || "-");
-
+  // ✅ user ممکنه لە userId یان user بیاد
   const user = o?.userId || o?.user || {};
-  const customer =
-    `${user?.firstName || ""} ${user?.lastName || ""}`.trim() ||
-    user?.phone1 ||
-    o?.customer ||
-    "-";
+  const customerName = `${user?.firstName || ""} ${user?.lastName || ""}`.trim();
+  const customer = customerName || user?.phone1 || user?.phone || o?.customer || "-";
 
-  // UI شما فارسی/انگلیسی قاطیه. اینجا فقط همون چیزی که داری رو حفظ می‌کنیم:
-  const status = o?.status || "pending";
+  const rawStatus = String(o?.status || "PENDING").toUpperCase();
 
-  const statusLabelMap = {
-    pending: "در انتظار بررسی",
-    complete: "تکمیل شده",
-    rejected: "لغو شده",
-    canceled: "لغو شده",
-  };
+  // ✅ total ئەگەر نبود لە items جمع بزن
+  const computedTotal = computeTotalFromItems(o?.items);
+  const total = o?.total ?? computedTotal;
+
+  const invoice = `${Number(total || 0).toLocaleString()} IQD`;
 
   return {
     id,
+    invoiceNumber: invoiceNo,
+    total, // ✅
     invoice,
-    status: statusLabelMap[status] || status,
-    date: o?.createdAt ? safeFaDate(o.createdAt) : (o?.date || "-"),
+    rawStatus,
+    status: statusLabelMap[rawStatus] || rawStatus,
+    date: o?.createdAt ? safeFaDate(o.createdAt) : "-",
     customer,
+    user: user || null,
+    address: o?.address ?? "",
+    city: o?.city ?? "",
+    items: Array.isArray(o?.items) ? o.items : [],
     __raw: o,
   };
 }
@@ -56,9 +71,11 @@ export function useOrders() {
       try {
         setLoading(true);
 
-        const { items } = await fetchOrders({ limit: 50, sort: "-createdAt" });
+        const { items } = await fetchOrders({ page: 1, limit: 50, sort: "-createdAt" });
 
-        const normalized = (items || []).map(normalizeOrderForUI);
+        const normalized = (items || [])
+          .filter((x) => x && (x._id || x.id))
+          .map(normalizeOrderForUI);
 
         startTransition(() => {
           if (mounted) setOrders(normalized);
@@ -74,11 +91,10 @@ export function useOrders() {
     };
 
     run();
-
     return () => {
       mounted = false;
     };
-  }, [startTransition]);
+  }, []);
 
   return {
     orders,

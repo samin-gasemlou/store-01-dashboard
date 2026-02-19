@@ -1,0 +1,960 @@
+Remaining Persian/Arabic-script segments after best-effort Sorani replacement.
+NOTE: These require manual translation to Sorani. Listed as: [segment] | file | context
+
+[صفحات] | src/main.jsx
+  context: wserRouter>     <Routes>       {/* Auth صفحات */}       <Route path="/login" element=
+
+[امروز] | src/components/charts/SalesChart.jsx
+  context: t function SalesChart({ selectedDate = "امروز" }) {   const fallback = useMemo(     (
+
+[شنبه] | src/components/charts/SalesChart.jsx
+  context: ck = useMemo(     () => [       { day: "شنبه", value: 2800000 },       { day: "یکشنب
+
+[یکشنبه] | src/components/charts/SalesChart.jsx
+  context: "شنبه", value: 2800000 },       { day: "یکشنبه", value: 3000000 },       { day: "دوشنب
+
+[دوشنبه] | src/components/charts/SalesChart.jsx
+  context: کشنبه", value: 3000000 },       { day: "دوشنبه", value: 3100000 },       { day: "سه‌شن
+
+[سه] | src/components/charts/SalesChart.jsx
+  context: وشنبه", value: 3100000 },       { day: "سه‌شنبه", value: 3300000 },       { day: "
+
+[چهارشنبه] | src/components/charts/SalesChart.jsx
+  context: ‌شنبه", value: 3300000 },       { day: "چهارشنبه", value: 3700000 },       { day: "پنج‌ش
+
+[پنج] | src/components/charts/SalesChart.jsx
+  context: رشنبه", value: 3700000 },       { day: "پنج‌شنبه", value: 8500000 },       { day: "
+
+[جمعه] | src/components/charts/SalesChart.jsx
+  context: ‌شنبه", value: 8500000 },       { day: "جمعه", value: 7000000 },     ],     []   ); 
+
+[پیشخوان] | src/components/layout/Sidebar.jsx
+  context: istModal";  const items = [   { label: "پیشخوان", icon: "/home.svg", path: "/" },   { l
+
+[بەرهەمەکان] | src/components/layout/Sidebar.jsx
+  context: : "/home.svg", path: "/" },   { label: "بەرهەمەکان", icon: "/shop.svg", path: "/products" 
+
+[سفارشات] | src/components/layout/Sidebar.jsx
+  context: .svg", path: "/products" },   { label: "سفارشات", icon: "/shopping-cart.svg", path: "/o
+
+[ڕاپۆربۆت] | src/components/layout/Sidebar.jsx
+  context: rt.svg", path: "/orders" },   { label: "ڕاپۆربۆت", icon: "/chart.svg", path: "/reports" 
+
+[بەکارهێنەران] | src/components/layout/Sidebar.jsx
+  context: t.svg", path: "/reports" },   { label: "بەکارهێنەران", icon: "/user-white.svg", path: "/user
+
+[عمده] | src/components/layout/Sidebar.jsx
+  context: ite.svg", path: "/users" },   { label: "عمده فروشی", icon: "/people.svg", path: "#" 
+
+[فروشی] | src/components/layout/Sidebar.jsx
+  context: vg", path: "/users" },   { label: "عمده فروشی", icon: "/people.svg", path: "#" },   {
+
+[ڕێکخستنەکان] | src/components/layout/Sidebar.jsx
+  context: "/people.svg", path: "#" },   { label: "ڕێکخستنەکان سایت", icon: "/setting-5.svg", path: "#
+
+[سایت] | src/components/layout/Sidebar.jsx
+  context: ", path: "#" },   { label: "ڕێکخستنەکان سایت", icon: "/setting-5.svg", path: "#" }, 
+
+[کد] | src/components/layout/Sidebar.jsx
+  context: etting-5.svg", path: "#" },   { label: "کد تخفیف", icon: "/medal-star.svg", path: 
+
+[تخفیف] | src/components/layout/Sidebar.jsx
+  context: ing-5.svg", path: "#" },   { label: "کد تخفیف", icon: "/medal-star.svg", path: "/disc
+
+[هەموو] | src/components/layout/Sidebar.jsx
+  context:   const productsSubmenu = [   { label: "هەموو بەرهەمەکان", path: "/products" },   { l
+
+[زیادکردن] | src/components/layout/Sidebar.jsx
+  context: ەکان", path: "/products" },   { label: "زیادکردن بەرهەم", path: "/products/add" },   { l
+
+[بەرهەم] | src/components/layout/Sidebar.jsx
+  context: th: "/products" },   { label: "زیادکردن بەرهەم", path: "/products/add" },   { label: "
+
+[دسته] | src/components/layout/Sidebar.jsx
+  context: ", path: "/products/add" },   { label: "دسته‌بندی‌ها", path: "/products/categories" 
+
+[بندی] | src/components/layout/Sidebar.jsx
+  context: th: "/products/add" },   { label: "دسته‌بندی‌ها", path: "/products/categories" },   
+
+[ها] | src/components/layout/Sidebar.jsx
+  context: /products/add" },   { label: "دسته‌بندی‌ها", path: "/products/categories" },   { l
+
+[برندها] | src/components/layout/Sidebar.jsx
+  context: : "/products/categories" },   { label: "برندها", path: "/products/brands" }, ];  expor
+
+[ارتفاع] | src/components/layout/Sidebar.jsx
+  context:      `}         style={{           // ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە      
+
+[منطقی] | src/components/layout/Sidebar.jsx
+  context:          style={{           // ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە           m
+
+[برای] | src/components/layout/Sidebar.jsx
+  context:    style={{           // ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە           maxHei
+
+[جلوگیری] | src/components/layout/Sidebar.jsx
+  context: yle={{           // ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە           maxHeight: "ca
+
+[لە] | src/components/layout/Sidebar.jsx
+  context:          // ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە           maxHeight: "calc(
+
+[اسکرول] | src/components/layout/Sidebar.jsx
+  context:       // ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە           maxHeight: "calc(100dvh 
+
+[پەڕە] | src/components/layout/Sidebar.jsx
+  context: / ✅ ارتفاع منطقی برای جلوگیری لە اسکرول پەڕە           maxHeight: "calc(100dvh - 96p
+
+[فقط] | src/components/layout/Sidebar.jsx
+  context: 6px)",         }}       >         {/* ✅ فقط داخل مێنیو اسکرول بخورد */}         <di
+
+[داخل] | src/components/layout/Sidebar.jsx
+  context: ",         }}       >         {/* ✅ فقط داخل مێنیو اسکرول بخورد */}         <div cla
+
+[مێنیو] | src/components/layout/Sidebar.jsx
+  context:       }}       >         {/* ✅ فقط داخل مێنیو اسکرول بخورد */}         <div className
+
+[بخورد] | src/components/layout/Sidebar.jsx
+  context:   >         {/* ✅ فقط داخل مێنیو اسکرول بخورد */}         <div className="overflow-y-
+
+[گەڕان] | src/components/layout/TopBar.jsx
+  context: 3px]           "           placeholder="گەڕان بکە: ناوی بەکارهێنەر / کد داواکاری / بە
+
+[بکە] | src/components/layout/TopBar.jsx
+  context:          "           placeholder="گەڕان بکە: ناوی بەکارهێنەر / کد داواکاری / بەرهەم
+
+[ناوی] | src/components/layout/TopBar.jsx
+  context:     "           placeholder="گەڕان بکە: ناوی بەکارهێنەر / کد داواکاری / بەرهەم"     
+
+[بەکارهێنەر] | src/components/layout/TopBar.jsx
+  context:            placeholder="گەڕان بکە: ناوی بەکارهێنەر / کد داواکاری / بەرهەم"         />     
+
+[داواکاری] | src/components/layout/TopBar.jsx
+  context: holder="گەڕان بکە: ناوی بەکارهێنەر / کد داواکاری / بەرهەم"         />         <img      
+
+[ناو] | src/components/modals/DiscountDetailsModal.jsx
+  context: YYY-MM-DD      if (!name) return alert("ناو تخفیف را وارد کنید");     if (!code) re
+
+[را] | src/components/modals/DiscountDetailsModal.jsx
+  context:      if (!name) return alert("ناو تخفیف را وارد کنید");     if (!code) return aler
+
+[وارد] | src/components/modals/DiscountDetailsModal.jsx
+  context:   if (!name) return alert("ناو تخفیف را وارد کنید");     if (!code) return alert("کد
+
+[کنید] | src/components/modals/DiscountDetailsModal.jsx
+  context: (!name) return alert("ناو تخفیف را وارد کنید");     if (!code) return alert("کد تخفی
+
+[درصد] | src/components/modals/DiscountDetailsModal.jsx
+  context: د");     if (!percentRaw) return alert("درصد تخفیف را وارد کنید");     if (!date) re
+
+[ڕێکەوت] | src/components/modals/DiscountDetailsModal.jsx
+  context: رد کنید");     if (!date) return alert("ڕێکەوت انقضا را انتخاب کنید");      const payl
+
+[انقضا] | src/components/modals/DiscountDetailsModal.jsx
+  context: ");     if (!date) return alert("ڕێکەوت انقضا را انتخاب کنید");      const payload = 
+
+[انتخاب] | src/components/modals/DiscountDetailsModal.jsx
+  context: f (!date) return alert("ڕێکەوت انقضا را انتخاب کنید");      const payload = {       ..
+
+[چند] | src/components/modals/DiscountDetailsModal.jsx
+  context:   onClose?.();   };    // ✅ FIX: ناو لە چند فیلد ممکن   const initialName =     (in
+
+[فیلد] | src/components/modals/DiscountDetailsModal.jsx
+  context: Close?.();   };    // ✅ FIX: ناو لە چند فیلد ممکن   const initialName =     (initial
+
+[ممکن] | src/components/modals/DiscountDetailsModal.jsx
+  context: ?.();   };    // ✅ FIX: ناو لە چند فیلد ممکن   const initialName =     (initialData?
+
+[چوونەژوورەوەی] | src/components/modals/DiscountDetailsModal.jsx
+  context: ).trim() ||     "";    // ✅ FIX: ڕێکەوت چوونەژوورەوەی لە dateInput (که لە normalize میاد)   c
+
+[که] | src/components/modals/DiscountDetailsModal.jsx
+  context: FIX: ڕێکەوت چوونەژوورەوەی لە dateInput (که لە normalize میاد)   const initialDateF
+
+[میاد] | src/components/modals/DiscountDetailsModal.jsx
+  context: ەژوورەوەی لە dateInput (که لە normalize میاد)   const initialDateForInput =     type
+
+[دەستکاریکردن] | src/components/modals/DiscountDetailsModal.jsx
+  context: e={onClose}       title={initialData ? "دەستکاریکردن کد تخفیف" : "زیادکردن کد تخفیف"}       
+
+[پنل] | src/components/modals/DiscountDetailsModal.jsx
+  context: sName="text-xs text-gray-500">ڕێکەوت لە پنل انتخاب می‌شود (میلادی).</p>           <
+
+[می] | src/components/modals/DiscountDetailsModal.jsx
+  context: -xs text-gray-500">ڕێکەوت لە پنل انتخاب می‌شود (میلادی).</p>           </div>     
+
+[شود] | src/components/modals/DiscountDetailsModal.jsx
+  context:  text-gray-500">ڕێکەوت لە پنل انتخاب می‌شود (میلادی).</p>           </div>         
+
+[میلادی] | src/components/modals/DiscountDetailsModal.jsx
+  context: -gray-500">ڕێکەوت لە پنل انتخاب می‌شود (میلادی).</p>           </div>         </div>  
+
+[پاشەکەوتکردن] | src/components/modals/DiscountDetailsModal.jsx
+  context: nsition-colors"           >             پاشەکەوتکردن           </button>           <button  
+
+[داخستن] | src/components/modals/DiscountDetailsModal.jsx
+  context: nsition-colors"           >             داخستن           </button>         </div>     
+
+[خیلی] | src/components/modals/DiscountListModal.jsx
+  context:   } catch {     return "—";   } }  // ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردها
+
+[مهم] | src/components/modals/DiscountListModal.jsx
+  context: atch {     return "—";   } }  // ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردهای قد
+
+[بعضی] | src/components/modals/DiscountListModal.jsx
+  context: {     return "—";   } }  // ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردهای قدیمی na
+
+[بک] | src/components/modals/DiscountListModal.jsx
+  context:  return "—";   } }  // ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردهای قدیمی name 
+
+[ندارن] | src/components/modals/DiscountListModal.jsx
+  context: ;   } }  // ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردهای قدیمی name ندارن // پس fa
+
+[یا] | src/components/modals/DiscountListModal.jsx
+  context:  // ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردهای قدیمی name ندارن // پس fallbac
+
+[رکوردهای] | src/components/modals/DiscountListModal.jsx
+  context:  ✅ خیلی مهم: بعضی بک‌ها name ندارن / یا رکوردهای قدیمی name ندارن // پس fallback: name -
+
+[قدیمی] | src/components/modals/DiscountListModal.jsx
+  context: هم: بعضی بک‌ها name ندارن / یا رکوردهای قدیمی name ندارن // پس fallback: name -> titl
+
+[پس] | src/components/modals/DiscountListModal.jsx
+  context: ندارن / یا رکوردهای قدیمی name ندارن // پس fallback: name -> title -> label functi
+
+[در] | src/components/modals/DiscountListModal.jsx
+  context: At) : "—";    // برای input type="date" در مودال: YYYY-MM-DD   const dateInput =  
+
+[مودال] | src/components/modals/DiscountListModal.jsx
+  context:  : "—";    // برای input type="date" در مودال: YYYY-MM-DD   const dateInput =     p?.
+
+[شما] | src/components/modals/DiscountListModal.jsx
+  context: s = await listPromoCodes();       // بک شما listPromos => آرایه برمی‌گردونه       c
+
+[آرایه] | src/components/modals/DiscountListModal.jsx
+  context: oCodes();       // بک شما listPromos => آرایه برمی‌گردونه       const list = Array.is
+
+[برمی] | src/components/modals/DiscountListModal.jsx
+  context: ();       // بک شما listPromos => آرایه برمی‌گردونه       const list = Array.isArray
+
+[گردونه] | src/components/modals/DiscountListModal.jsx
+  context:      // بک شما listPromos => آرایه برمی‌گردونه       const list = Array.isArray(res) ?
+
+[اسم] | src/components/modals/DiscountListModal.jsx
+  context:  : null;      const body = {       // ✅ اسم واقعی       name: String(payload.name |
+
+[واقعی] | src/components/modals/DiscountListModal.jsx
+  context: ull;      const body = {       // ✅ اسم واقعی       name: String(payload.name || "").
+
+[ناسەرکەوتوو] | src/components/modals/DiscountListModal.jsx
+  context: rt(e?.message || "پاشەکەوتکردن کد تخفیف ناسەرکەوتوو بود");     } finally {       setLoading
+
+[بود] | src/components/modals/DiscountListModal.jsx
+  context: e || "پاشەکەوتکردن کد تخفیف ناسەرکەوتوو بود");     } finally {       setLoading(fal
+
+[اگر] | src/components/modals/DiscountListModal.jsx
+  context:     setLoading(false);     }   };    // اگر خواستی سڕینەوە هم واقعی باشد (UI فعلاً 
+
+[خواستی] | src/components/modals/DiscountListModal.jsx
+  context: setLoading(false);     }   };    // اگر خواستی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ند
+
+[سڕینەوە] | src/components/modals/DiscountListModal.jsx
+  context: ing(false);     }   };    // اگر خواستی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ندارد)    
+
+[هم] | src/components/modals/DiscountListModal.jsx
+  context: e);     }   };    // اگر خواستی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ندارد)    ret
+
+[باشد] | src/components/modals/DiscountListModal.jsx
+  context:    };    // اگر خواستی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ندارد)    return (     <
+
+[فعلاً] | src/components/modals/DiscountListModal.jsx
+  context: // اگر خواستی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ندارد)    return (     <>       <B
+
+[دکمه] | src/components/modals/DiscountListModal.jsx
+  context:  خواستی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ندارد)    return (     <>       <BaseMo
+
+[ندارد] | src/components/modals/DiscountListModal.jsx
+  context: تی سڕینەوە هم واقعی باشد (UI فعلاً دکمه ندارد)    return (     <>       <BaseModal is
+
+[لیست] | src/components/modals/DiscountListModal.jsx
+  context: sOpen={isOpen} onClose={onClose} title="لیست کد های تخفیف" size="xl">         {/* To
+
+[های] | src/components/modals/DiscountListModal.jsx
+  context: sOpen} onClose={onClose} title="لیست کد های تخفیف" size="xl">         {/* Top Actio
+
+[دەستپێگەیشتن] | src/components/modals/DiscountListModal.jsx
+  context: ame="pb-3 font-semibold text-left pl-4">دەستپێگەیشتن</th>               </tr>             </
+
+[همیشه] | src/components/modals/DiscountListModal.jsx
+  context:          >                   {/* ✅ FIX: همیشه name درست */}                   <td cla
+
+[درست] | src/components/modals/DiscountListModal.jsx
+  context:                   {/* ✅ FIX: همیشه name درست */}                   <td className="py
+
+[این] | src/components/modals/DiscountListModal.jsx
+  context:                 {/* اگر خواستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل 
+
+[خط] | src/components/modals/DiscountListModal.jsx
+  context:             {/* اگر خواستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}
+
+[رو] | src/components/modals/DiscountListModal.jsx
+  context:          {/* اگر خواستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}   
+
+[جای] | src/components/modals/DiscountListModal.jsx
+  context:       {/* اگر خواستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}       
+
+[مناسب] | src/components/modals/DiscountListModal.jsx
+  context:   {/* اگر خواستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}             
+
+[بذار] | src/components/modals/DiscountListModal.jsx
+  context: اگر خواستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}                  
+
+[بدون] | src/components/modals/DiscountListModal.jsx
+  context: واستی سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}                     {/
+
+[تغییر] | src/components/modals/DiscountListModal.jsx
+  context:  سڕینەوە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}                     {/* <but
+
+[اسبۆیل] | src/components/modals/DiscountListModal.jsx
+  context: وە: این خط رو جای مناسب بذار بدون تغییر اسبۆیل */}                     {/* <button onC
+
+[حال] | src/components/modals/DiscountListModal.jsx
+  context: 3 text-right text-xs text-slate-500">در حال دریافت...</div>           ) : null}    
+
+[دریافت] | src/components/modals/DiscountListModal.jsx
+  context: xt-right text-xs text-slate-500">در حال دریافت...</div>           ) : null}         </
+
+[برند] | src/components/modals/EditBrandModal.jsx
+  context: me.trim().length < 2) return alert("ناو برند الزامی است");     if (!categoryId) retu
+
+[الزامی] | src/components/modals/EditBrandModal.jsx
+  context: im().length < 2) return alert("ناو برند الزامی است");     if (!categoryId) return aler
+
+[است] | src/components/modals/EditBrandModal.jsx
+  context: ngth < 2) return alert("ناو برند الزامی است");     if (!categoryId) return alert("د
+
+[مادر] | src/components/modals/EditBrandModal.jsx
+  context: f (!categoryId) return alert("دسته بندی مادر الزامی است");      try {       await up
+
+[با] | src/components/modals/EditBrandModal.jsx
+  context:  onClose?.();       alert("دەستکاریکردن با سەرکەوتوویت انجام شد.");     } catch (e
+
+[سەرکەوتوویت] | src/components/modals/EditBrandModal.jsx
+  context: Close?.();       alert("دەستکاریکردن با سەرکەوتوویت انجام شد.");     } catch (e) {       co
+
+[انجام] | src/components/modals/EditBrandModal.jsx
+  context:      alert("دەستکاریکردن با سەرکەوتوویت انجام شد.");     } catch (e) {       console.
+
+[شد] | src/components/modals/EditBrandModal.jsx
+  context: lert("دەستکاریکردن با سەرکەوتوویت انجام شد.");     } catch (e) {       console.err
+
+[شود؟] | src/components/modals/EditBrandModal.jsx
+  context: ._id) return;     if (!confirm("سڕینەوە شود؟")) return;      try {       await delet
+
+[سڕایەوە] | src/components/modals/EditBrandModal.jsx
+  context: ed?.();       onClose?.();       alert("سڕایەوە.");     } catch (e) {       console.err
+
+[اصلی] | src/components/modals/EditBrandModal.jsx
+  context: xt-sm font-semibold text-slate-700">ناو اصلی (انگلیسی)</label>           <input     
+
+[انگلیسی] | src/components/modals/EditBrandModal.jsx
+  context: font-semibold text-slate-700">ناو اصلی (انگلیسی)</label>           <input             t
+
+[وقتی] | src/components/modals/EditCategoryModal.jsx
+  context: tForm((p) => ({ ...p, [k]: v }));    // وقتی مودال بلە شد: پر کردن فرم   useEffect((
+
+[بلە] | src/components/modals/EditCategoryModal.jsx
+  context: > ({ ...p, [k]: v }));    // وقتی مودال بلە شد: پر کردن فرم   useEffect(() => {    
+
+[پر] | src/components/modals/EditCategoryModal.jsx
+  context: p, [k]: v }));    // وقتی مودال بلە شد: پر کردن فرم   useEffect(() => {     if (!i
+
+[کردن] | src/components/modals/EditCategoryModal.jsx
+  context: [k]: v }));    // وقتی مودال بلە شد: پر کردن فرم   useEffect(() => {     if (!isOpen
+
+[فرم] | src/components/modals/EditCategoryModal.jsx
+  context: v }));    // وقتی مودال بلە شد: پر کردن فرم   useEffect(() => {     if (!isOpen) re
+
+[گرفتن] | src/components/modals/EditCategoryModal.jsx
+  context: n, category]);    // وقتی مودال بلە شد: گرفتن لیست parent ها   useEffect(() => {     
+
+[خودش] | src/components/modals/EditCategoryModal.jsx
+  context:         if (!alive) return;          // خودش رو لە parent list سڕینەوە کن         co
+
+[کن] | src/components/modals/EditCategoryModal.jsx
+  context:       // خودش رو لە parent list سڕینەوە کن         const filtered = category?._id 
+
+[عربی] | src/components/modals/EditCategoryModal.jsx
+  context: xt-sm font-semibold text-slate-700">ناو عربی</label>           <input             ty
+
+[کوردی] | src/components/modals/EditCategoryModal.jsx
+  context: xt-sm font-semibold text-slate-700">ناو کوردی:</label>           <input             t
+
+[تصویر] | src/components/modals/EditCategoryModal.jsx
+  context: ="text-sm font-semibold text-slate-700">تصویر دسته بندی:</label>              <div cl
+
+[چاوەڕوانی] | src/components/modals/OrderDetailsModal.jsx
+  context: const statusLabelMap = {   PENDING: "لە چاوەڕوانی بررسی",   ACCEPTED: "پذیرفته شده",   CO
+
+[بررسی] | src/components/modals/OrderDetailsModal.jsx
+  context: usLabelMap = {   PENDING: "لە چاوەڕوانی بررسی",   ACCEPTED: "پذیرفته شده",   COMPLETE
+
+[پذیرفته] | src/components/modals/OrderDetailsModal.jsx
+  context: ING: "لە چاوەڕوانی بررسی",   ACCEPTED: "پذیرفته شده",   COMPLETE: "تکمیل شده",   CANCEL
+
+[شده] | src/components/modals/OrderDetailsModal.jsx
+  context:  چاوەڕوانی بررسی",   ACCEPTED: "پذیرفته شده",   COMPLETE: "تکمیل شده",   CANCELED: 
+
+[تکمیل] | src/components/modals/OrderDetailsModal.jsx
+  context:   ACCEPTED: "پذیرفته شده",   COMPLETE: "تکمیل شده",   CANCELED: "هەڵوەشاندنەوە شده", 
+
+[هەڵوەشاندنەوە] | src/components/modals/OrderDetailsModal.jsx
+  context: ,   COMPLETE: "تکمیل شده",   CANCELED: "هەڵوەشاندنەوە شده", };  const OrderDetailsModal = ({ 
+
+[عدد] | src/components/modals/OrderDetailsModal.jsx
+  context: = it.quantity != null ? `${it.quantity} عدد` : "-";       const total =         it.
+
+[ناوعتبر] | src/components/modals/OrderDetailsModal.jsx
+  context:      if (!id) return alert("ID داواکاری ناوعتبر است");      try {       setSaving(true)
+
+[دۆخ] | src/components/modals/OrderDetailsModal.jsx
+  context: s: newStatus, note: "" });       alert("دۆخ داواکاری با سەرکەوتوویت تغییر کرد");   
+
+[کرد] | src/components/modals/OrderDetailsModal.jsx
+  context: lert("دۆخ داواکاری با سەرکەوتوویت تغییر کرد");       onAfterChange?.();     } catch
+
+[وردەکاریەکان] | src/components/modals/OrderDetailsModal.jsx
+  context: }       onClose={onClose}       title={`وردەکاریەکان داواکاری : #${titleNo}`}       size="xl
+
+[ژمارە] | src/components/modals/OrderDetailsModal.jsx
+  context: an className="font-bold text-slate-700">ژمارە تەلەفۆن:</span>{" "}               {ord
+
+[تەلەفۆن] | src/components/modals/OrderDetailsModal.jsx
+  context: ssName="font-bold text-slate-700">ژمارە تەلەفۆن:</span>{" "}               {order?.user
+
+[ناونیشان] | src/components/modals/OrderDetailsModal.jsx
+  context: an className="font-bold text-slate-700">ناونیشان:</span>{" "}               {order?.addr
+
+[شار] | src/components/modals/OrderDetailsModal.jsx
+  context: an className="font-bold text-slate-700">شار:</span>{" "}               {order?.city
+
+[سوشال] | src/components/modals/OrderDetailsModal.jsx
+  context: an className="font-bold text-slate-700">سوشال مدیا:</span>             <img src="/tik
+
+[مدیا] | src/components/modals/OrderDetailsModal.jsx
+  context: ssName="font-bold text-slate-700">سوشال مدیا:</span>             <img src="/tiktok.s
+
+[تۆمارکردن] | src/components/modals/OrderDetailsModal.jsx
+  context: fy-between">               <span>ڕێکەوت تۆمارکردن:</span>               <span>{order?.dat
+
+[پذیرفتن] | src/components/modals/OrderDetailsModal.jsx
+  context: ity-60"               >                 پذیرفتن               </button>               <
+
+[محصولی] | src/components/modals/OrderDetailsModal.jsx
+  context: sm text-gray-500 py-6">                 محصولی برای این داواکاری تۆمارکردن نشده       
+
+[نشده] | src/components/modals/OrderDetailsModal.jsx
+  context:      محصولی برای این داواکاری تۆمارکردن نشده               </div>             ) : ( 
+
+[قیمت] | src/components/modals/OrderDetailsModal.jsx
+  context:         <span className="font-semibold">قیمت واحد:</span>                           
+
+[واحد] | src/components/modals/OrderDetailsModal.jsx
+  context:    <span className="font-semibold">قیمت واحد:</span>                           <span
+
+[جمع] | src/components/modals/OrderDetailsModal.jsx
+  context:         <span className="font-semibold">جمع مبلغ:</span>                           
+
+[مبلغ] | src/components/modals/OrderDetailsModal.jsx
+  context:     <span className="font-semibold">جمع مبلغ:</span>                           <span
+
+[بهترین] | src/components/modals/ReportModal.jsx
+  context: n}       onClose={onClose}       title="بهترین کڕیار‌ها"       size="md"     >       <
+
+[کڕیار] | src/components/modals/ReportModal.jsx
+  context:   onClose={onClose}       title="بهترین کڕیار‌ها"       size="md"     >       <div cl
+
+[داده] | src/components/modals/ReportModal.jsx
+  context:        {loading ? "در حال دریافت..." : "داده‌ای برای پیشاندان وجود ندارد"}          
+
+[ای] | src/components/modals/ReportModal.jsx
+  context:   {loading ? "در حال دریافت..." : "داده‌ای برای پیشاندان وجود ندارد"}           </
+
+[پیشاندان] | src/components/modals/ReportModal.jsx
+  context: ng ? "در حال دریافت..." : "داده‌ای برای پیشاندان وجود ندارد"}           </div>         )
+
+[وجود] | src/components/modals/ReportModal.jsx
+  context: حال دریافت..." : "داده‌ای برای پیشاندان وجود ندارد"}           </div>         ) : ( 
+
+[مجموع] | src/components/modals/ReportModal.jsx
+  context: <div className="text-xs text-slate-500">مجموع خرید</div>               </div>        
+
+[خرید] | src/components/modals/ReportModal.jsx
+  context: lassName="text-xs text-slate-500">مجموع خرید</div>               </div>             
+
+[پوشش] | src/components/modals/UserProfileModal.jsx
+  context: users.service.js";  // ✅ unwrap helper: پوشش data.data و انواع ساخبۆرها function unw
+
+[و] | src/components/modals/UserProfileModal.jsx
+  context: s";  // ✅ unwrap helper: پوشش data.data و انواع ساخبۆرها function unwrapApi(res) 
+
+[انواع] | src/components/modals/UserProfileModal.jsx
+  context: ;  // ✅ unwrap helper: پوشش data.data و انواع ساخبۆرها function unwrapApi(res) {   if
+
+[ساخبۆرها] | src/components/modals/UserProfileModal.jsx
+  context: ✅ unwrap helper: پوشش data.data و انواع ساخبۆرها function unwrapApi(res) {   if (!res) r
+
+[ممکنه] | src/components/modals/UserProfileModal.jsx
+  context: (u || null);          // ✅ FIX: history ممکنه {history:[...]} یا {data:{history}} یا 
+
+[باشه] | src/components/modals/UserProfileModal.jsx
+  context: ory:[...]} یا {data:{history}} یا آرایه باشه         const rows = Array.isArray(h?.h
+
+[ظاهر] | src/components/modals/UserProfileModal.jsx
+  context:     });        // ✅ UI sync (بدون تغییر ظاهر)       setFullUser((prev) => {         
+
+[زانیاری] | src/components/modals/UserProfileModal.jsx
+  context: l);       setDraft(null);        alert("زانیاری بەکارهێنەر بروزرسانی شد ✅");       onAf
+
+[بروزرسانی] | src/components/modals/UserProfileModal.jsx
+  context: null);        alert("زانیاری بەکارهێنەر بروزرسانی شد ✅");       onAfterChange?.();     } 
+
+[آیا] | src/components/modals/UserProfileModal.jsx
+  context:  if (!userId) return;     if (!confirm("آیا مطمئن هستید می‌خواهید این بەکارهێنەر سڕ
+
+[مطمئن] | src/components/modals/UserProfileModal.jsx
+  context: (!userId) return;     if (!confirm("آیا مطمئن هستید می‌خواهید این بەکارهێنەر سڕینەوە 
+
+[هستید] | src/components/modals/UserProfileModal.jsx
+  context: Id) return;     if (!confirm("آیا مطمئن هستید می‌خواهید این بەکارهێنەر سڕینەوە شود؟")
+
+[خواهید] | src/components/modals/UserProfileModal.jsx
+  context: n;     if (!confirm("آیا مطمئن هستید می‌خواهید این بەکارهێنەر سڕینەوە شود؟")) return; 
+
+[آنبلاک] | src/components/modals/UserProfileModal.jsx
+  context: );    const blockBtnText = isBlocked ? "آنبلاک" : "بلاک";    const handleBlockToggle =
+
+[بلاک] | src/components/modals/UserProfileModal.jsx
+  context:  blockBtnText = isBlocked ? "آنبلاک" : "بلاک";    const handleBlockToggle = async ()
+
+[کردار] | src/components/modals/UserProfileModal.jsx
+  context: le.error(e);       alert(e?.message || "کردار بلاک/آنبلاک ناسەرکەوتوو بود");     } fi
+
+[پرۆفایل] | src/components/modals/UserProfileModal.jsx
+  context: }       onClose={onClose}       title={`پرۆفایل بەکارهێنەر : ${current.name} (${user?.u
+
+[کۆدی] | src/components/modals/UserProfileModal.jsx
+  context: assName="font-bold text-slate-700 mb-1">کۆدی پۆستە:</p>               {editingField 
+
+[پۆستە] | src/components/modals/UserProfileModal.jsx
+  context: me="font-bold text-slate-700 mb-1">کۆدی پۆستە:</p>               {editingField === "p
+
+[تۆماربوون] | src/components/modals/UserProfileModal.jsx
+  context: sName="font-bold text-slate-700">ڕێکەوت تۆماربوون:</span>{" "}               {current.reg
+
+[سود] | src/components/modals/UserProfileModal.jsx
+  context: ify-between">               <span>مجموع سود خالص:</span>               <span classN
+
+[خالص] | src/components/modals/UserProfileModal.jsx
+  context: between">               <span>مجموع سود خالص:</span>               <span className="
+
+[سبدهای] | src/components/modals/UserProfileModal.jsx
+  context:        <th className="p-3 rounded-r-lg">سبدهای خرید</th>                   <th classNa
+
+[کل] | src/components/modals/UserProfileModal.jsx
+  context:   <th className="p-3 rounded-l-lg">مبلغ کل</th>                 </tr>             
+
+[بعنوان] | src/components/pages/Categories.jsx
+  context: ته‌های اصلی (parentId=null) برای انتخاب بعنوان مادر       const parentsOnly = arr.filt
+
+[نوێ] | src/components/pages/Dashboard.jsx
+  context: ack = [       { id: 1, title: "داواکاری نوێ", value: 16, action: true },       { id
+
+[فروش] | src/components/pages/Dashboard.jsx
+  context: ,700,000 IQD" },       { id: 3, title: "فروش امروز", value: "13,900,000 IQD" },     
+
+[ساپورت] | src/components/pages/Login.jsx
+  context:  pass,         },       });        // ✅ ساپورت چند شکل مختلف پاسخ بک       const paylo
+
+[شکل] | src/components/pages/Login.jsx
+  context:     },       });        // ✅ ساپورت چند شکل مختلف پاسخ بک       const payload = res
+
+[مختلف] | src/components/pages/Login.jsx
+  context: },       });        // ✅ ساپورت چند شکل مختلف پاسخ بک       const payload = res?.data
+
+[پاسخ] | src/components/pages/Login.jsx
+  context:    });        // ✅ ساپورت چند شکل مختلف پاسخ بک       const payload = res?.data ?? r
+
+[توکن] | src/components/pages/Login.jsx
+  context: accessToken) {         throw new Error("توکن لە بک برنگشت (accessToken خالیه)");    
+
+[برنگشت] | src/components/pages/Login.jsx
+  context: ) {         throw new Error("توکن لە بک برنگشت (accessToken خالیه)");       }        l
+
+[خالیه] | src/components/pages/Login.jsx
+  context: w Error("توکن لە بک برنگشت (accessToken خالیه)");       }        localStorage.setItem
+
+[عطر] | src/components/pages/Products.jsx
+  context: t initialProducts = [   { id: 1, name: "عطر ژنانه فلورال", price: "6,440,000 IQD", 
+
+[ژنانه] | src/components/pages/Products.jsx
+  context: itialProducts = [   { id: 1, name: "عطر ژنانه فلورال", price: "6,440,000 IQD", stock:
+
+[فلورال] | src/components/pages/Products.jsx
+  context: roducts = [   { id: 1, name: "عطر ژنانه فلورال", price: "6,440,000 IQD", stock: 250, e
+
+[پیاوانه] | src/components/pages/Products.jsx
+  context: g: "/mini.png" },   { id: 2, name: "عطر پیاوانه کلاسیک", price: "4,200,000 IQD", stock:
+
+[کلاسیک] | src/components/pages/Products.jsx
+  context: i.png" },   { id: 2, name: "عطر پیاوانه کلاسیک", price: "4,200,000 IQD", stock: 15, ex
+
+[کرم] | src/components/pages/Products.jsx
+  context:  img: "/mini2.png" },   { id: 3, name: "کرم مرطوب‌کننده", price: "1,150,000 IQD", s
+
+[مرطوب] | src/components/pages/Products.jsx
+  context: : "/mini2.png" },   { id: 3, name: "کرم مرطوب‌کننده", price: "1,150,000 IQD", stock: 
+
+[کننده] | src/components/pages/Products.jsx
+  context: ni2.png" },   { id: 3, name: "کرم مرطوب‌کننده", price: "1,150,000 IQD", stock: 0, exp
+
+[شامپو] | src/components/pages/Products.jsx
+  context:  img: "/mini3.png" },   { id: 4, name: "شامپو ضد ریزش", price: "980,000 IQD", stock: 
+
+[ضد] | src/components/pages/Products.jsx
+  context: "/mini3.png" },   { id: 4, name: "شامپو ضد ریزش", price: "980,000 IQD", stock: 50,
+
+[ریزش] | src/components/pages/Products.jsx
+  context: ini3.png" },   { id: 4, name: "شامپو ضد ریزش", price: "980,000 IQD", stock: 50, expi
+
+[روغن] | src/components/pages/Products.jsx
+  context:  img: "/mini4.png" },   { id: 5, name: "روغن آرگان", price: "2,500,000 IQD", stock: 
+
+[آرگان] | src/components/pages/Products.jsx
+  context:  "/mini4.png" },   { id: 5, name: "روغن آرگان", price: "2,500,000 IQD", stock: 5, exp
+
+[همین] | src/components/pages/Report.jsx
+  context: {setSelectedDate} />          {/* ✅ فقط همین */}         <SalesChart selectedDate={s
+
+[کالاهای] | src/components/pages/Report.jsx
+  context: selectedDate} />          <Boxes title="کالاهای پرفروش" type="product" selectedDate={se
+
+[پرفروش] | src/components/pages/Report.jsx
+  context: Date} />          <Boxes title="کالاهای پرفروش" type="product" selectedDate={selectedD
+
+[کڕیارەکان] | src/components/pages/Report.jsx
+  context: {selectedDate} />         <Boxes title="کڕیارەکان برتر" type="customer" selectedDate={sel
+
+[برتر] | src/components/pages/Report.jsx
+  context: ate} />         <Boxes title="کڕیارەکان برتر" type="customer" selectedDate={selected
+
+[پەیام] | src/components/pages/Signup.jsx
+  context: ,         },       });        // اگر بک پەیام یا data داد، مشکلی نیست       void res;
+
+[داد،] | src/components/pages/Signup.jsx
+  context:      });        // اگر بک پەیام یا data داد، مشکلی نیست       void res;        setOk
+
+[مشکلی] | src/components/pages/Signup.jsx
+  context: });        // اگر بک پەیام یا data داد، مشکلی نیست       void res;        setOk("User
+
+[نیست] | src/components/pages/Signup.jsx
+  context:      // اگر بک پەیام یا data داد، مشکلی نیست       void res;        setOk("User crea
+
+[ساخته] | src/components/sections/brands/AddBrandForm.jsx
+  context: d?.();       alert("برند با سەرکەوتوویت ساخته شد.");     } catch (e) {       console.
+
+[ساخت] | src/components/sections/brands/AddBrandForm.jsx
+  context: le.error(e);       alert(e?.message || "ساخت برند ناسەرکەوتوو بود");     }   };    r
+
+[اضافه] | src/components/sections/brands/AddBrandForm.jsx
+  context: 273959] font-bold text-[20px]">         اضافه کردن برند       </h2>        <TextInput
+
+[خود] | src/components/sections/brands/BrandsTable.jsx
+  context: ) {   if (!out) return [];    // 1) اگر خود چوونەدەرەوەی آرایه بود   if (Array.isAr
+
+[چوونەدەرەوەی] | src/components/sections/brands/BrandsTable.jsx
+  context:   if (!out) return [];    // 1) اگر خود چوونەدەرەوەی آرایه بود   if (Array.isArray(out)) ret
+
+[جاها] | src/components/sections/brands/BrandsTable.jsx
+  context: ta)) return payload.data;    // 4) بعضی جاها => { items:[...] }   if (Array.isArray(
+
+[حالت] | src/components/sections/brands/BrandsTable.jsx
+  context: .items)) return payload.items;    // 5) حالت خیلی wrapperدار => { data:{ data:[...] 
+
+[دار] | src/components/sections/brands/BrandsTable.jsx
+  context: ayload.items;    // 5) حالت خیلی wrapperدار => { data:{ data:[...] } }   if (Array.
+
+[موجود] | src/components/sections/brands/BrandsTable.jsx
+  context: ر</span>             <span>ژمارە بەرهەم موجود</span>           </div>           <div 
+
+[برندی] | src/components/sections/brands/BrandsTable.jsx
+  context: r text-sm text-gray-500">               برندی وجود ندارد             </div>          
+
+[ناردن] | src/components/sections/categories/AddCategoryForm.jsx
+  context:   parentId: form.parentId || null, // ✅ ناردن به بک       });        setForm({ name_e
+
+[به] | src/components/sections/categories/AddCategoryForm.jsx
+  context: ntId: form.parentId || null, // ✅ ناردن به بک       });        setForm({ name_en: 
+
+[کردی] | src/components/sections/categories/AddCategoryForm.jsx
+  context: />       <TextInput         label=":ناو کردی"         value={form.name_kur}         
+
+[هەڵە] | src/components/sections/categories/ImageUploader.jsx
+  context:        console.error(err);       alert("هەڵە در انتخاب تصویر");     }   };    return
+
+[مرتضی] | src/components/sections/home/ordersData.js
+  context: rs = [   {     id: 3356,     customer: "مرتضی الوی",     price: "3,440,000 IQD",     
+
+[الوی] | src/components/sections/home/ordersData.js
+  context:    {     id: 3356,     customer: "مرتضی الوی",     price: "3,440,000 IQD",     statu
+
+[سارا] | src/components/sections/home/ordersData.js
+  context: ,   },   {     id: 2788,     customer: "سارا توکلی",     price: "5,320,000 IQD",    
+
+[توکلی] | src/components/sections/home/ordersData.js
+  context: ,   {     id: 2788,     customer: "سارا توکلی",     price: "5,320,000 IQD",     statu
+
+[نیما] | src/components/sections/home/ordersData.js
+  context: ,   },   {     id: 1674,     customer: "نیما جاوید",     price: "2,390,000 IQD",    
+
+[جاوید] | src/components/sections/home/ordersData.js
+  context: ,   {     id: 1674,     customer: "نیما جاوید",     price: "2,390,000 IQD",     statu
+
+[حل] | src/components/sections/home/OrdersRow.jsx
+  context:  getStatusStyle(order?.status);    // ✅ حل تەواو mismatch ناو کڕیار   const getCus
+
+[تەواو] | src/components/sections/home/OrdersRow.jsx
+  context: tStatusStyle(order?.status);    // ✅ حل تەواو mismatch ناو کڕیار   const getCustomerN
+
+[وقت] | src/components/sections/home/OrdersRow.jsx
+  context:     if (full) return full;      // بعضی وقت‌ها ممکنه name پاشەکەوتکراه باشه     if 
+
+[پاشەکەوتکراه] | src/components/sections/home/OrdersRow.jsx
+  context: rn full;      // بعضی وقت‌ها ممکنه name پاشەکەوتکراه باشه     if (user?.name) return user.na
+
+[مۆبایل] | src/components/sections/home/OrdersRow.jsx
+  context: ame) return user.name;      // fallback مۆبایل     if (user?.mobile) return user.mobil
+
+[بیشتر] | src/components/sections/home/OrdersTableD.jsx
+  context: rows = await fetchLatestOrders(6); // ✅ بیشتر لە 6 بۆ پیشاندان نده         if (alive)
+
+[بۆ] | src/components/sections/home/OrdersTableD.jsx
+  context: t fetchLatestOrders(6); // ✅ بیشتر لە 6 بۆ پیشاندان نده         if (alive) setOrde
+
+[نده] | src/components/sections/home/OrdersTableD.jsx
+  context: tOrders(6); // ✅ بیشتر لە 6 بۆ پیشاندان نده         if (alive) setOrders(Array.isAr
+
+[بینین] | src/components/sections/home/OrdersTableD.jsx
+  context:       type="button"         >           بینین         </button>          <h3 classNam
+
+[آخرین] | src/components/sections/home/OrdersTableD.jsx
+  context: ont-semibold text-[#273959]">           آخرین داواکاری‌ها         </h3>       </div> 
+
+[سفارشی] | src/components/sections/home/OrdersTableD.jsx
+  context: ray-500 text-center">                   سفارشی برای پیشاندان وجود ندارد               
+
+[حداکثر] | src/components/sections/home/TopProductsD.jsx
+  context: oading] = useState(true);    // ✅ همیشه حداکثر 6 ردیف   const rows = useMemo(() => {  
+
+[ردیف] | src/components/sections/home/TopProductsD.jsx
+  context:  useState(true);    // ✅ همیشه حداکثر 6 ردیف   const rows = useMemo(() => {     cons
+
+[ماند] | src/components/sections/home/TopProductsD.jsx
+  context: led:", e);         // fallback: mock می‌ماند       } finally {         if (alive) se
+
+[عنوان] | src/components/sections/home/TopProductsD.jsx
+  context: ToExcel = () => {     const headers = ["عنوان", "ژمارە فروش"];     const csvRows = ro
+
+[گلابی] | src/components/sections/home/topProductsData.js
+  context: nst topProducts = [   {     title: "عطر گلابی",     count: 18,   },   {     title: "ا
+
+[ادکلن] | src/components/sections/home/topProductsData.js
+  context: ی",     count: 18,   },   {     title: "ادکلن پیاوانه d300",     count: 16,   },   { 
+
+[آبرسان] | src/components/sections/home/topProductsData.js
+  context:     count: 16,   },   {     title: "کرم آبرسان صورت مخصوص کودکان",     count: 13,   },
+
+[صورت] | src/components/sections/home/topProductsData.js
+  context: nt: 16,   },   {     title: "کرم آبرسان صورت مخصوص کودکان",     count: 13,   },   { 
+
+[مخصوص] | src/components/sections/home/topProductsData.js
+  context: 6,   },   {     title: "کرم آبرسان صورت مخصوص کودکان",     count: 13,   },   {     ti
+
+[کودکان] | src/components/sections/home/topProductsData.js
+  context: ,   {     title: "کرم آبرسان صورت مخصوص کودکان",     count: 13,   },   {     title: "م
+
+[ماسک] | src/components/sections/home/topProductsData.js
+  context: ن",     count: 13,   },   {     title: "ماسک مو مدل هرمس",     count: 7,   },   {   
+
+[مو] | src/components/sections/home/topProductsData.js
+  context:    count: 13,   },   {     title: "ماسک مو مدل هرمس",     count: 7,   },   {     t
+
+[مدل] | src/components/sections/home/topProductsData.js
+  context: count: 13,   },   {     title: "ماسک مو مدل هرمس",     count: 7,   },   {     title
+
+[هرمس] | src/components/sections/home/topProductsData.js
+  context: t: 13,   },   {     title: "ماسک مو مدل هرمس",     count: 7,   },   {     title: "ما
+
+[داکو] | src/components/sections/home/topProductsData.js
+  context: nt: 7,   },   {     title: "ماسک مو مدل داکو",     count: 4,   }, ]; 
+
+[مشکل] | src/components/sections/orders/OrderRow.jsx
+  context: {num.toLocaleString()} IQD`; }  // ✅ حل مشکل ناو کڕیار (پشتیبانی لە هەموو ساخبۆرهای 
+
+[پشتیبانی] | src/components/sections/orders/OrderRow.jsx
+  context: ing()} IQD`; }  // ✅ حل مشکل ناو کڕیار (پشتیبانی لە هەموو ساخبۆرهای بک + جلوگیری لە هەڵە
+
+[ساخبۆرهای] | src/components/sections/orders/OrderRow.jsx
+  context:  ✅ حل مشکل ناو کڕیار (پشتیبانی لە هەموو ساخبۆرهای بک + جلوگیری لە هەڵە وقتی userId فقط Ob
+
+[قبل] | src/components/sections/orders/OrderRow.jsx
+  context:    if (!order) return "—";    // اگر لە قبل آماده شده باشد (لە OrdersTable یا هر جا
+
+[آماده] | src/components/sections/orders/OrderRow.jsx
+  context: f (!order) return "—";    // اگر لە قبل آماده شده باشد (لە OrdersTable یا هر جای دیگر
+
+[هر] | src/components/sections/orders/OrderRow.jsx
+  context: ە قبل آماده شده باشد (لە OrdersTable یا هر جای دیگر)   const direct = String(order
+
+[دیگر] | src/components/sections/orders/OrderRow.jsx
+  context: ماده شده باشد (لە OrdersTable یا هر جای دیگر)   const direct = String(order?.custome
+
+[طبق] | src/components/sections/orders/OrderRow.jsx
+  context: n direct;    // snapshot داخل داواکاری (طبق بک نوێ)   const snapName =     String(o
+
+[بود،] | src/components/sections/orders/OrderRow.jsx
+  context:  || null;    // اگر فقط ObjectId/String بود، لەش اسم در نمیاد   if (u && typeof u ==
+
+[لەش] | src/components/sections/orders/OrderRow.jsx
+  context: ull;    // اگر فقط ObjectId/String بود، لەش اسم در نمیاد   if (u && typeof u === "o
+
+[نمیاد] | src/components/sections/orders/OrderRow.jsx
+  context: اگر فقط ObjectId/String بود، لەش اسم در نمیاد   if (u && typeof u === "object") {    
+
+[ی] | src/components/sections/orders/OrdersTable.jsx
+  context: um + p * q;   }, 0); }  // ✅ مهم: هەموو‌ی حالت‌های بک/قدیمی/نوێ رو پوشش می‌ده (بد
+
+[ده] | src/components/sections/orders/OrdersTable.jsx
+  context: ەموو‌ی حالت‌های بک/قدیمی/نوێ رو پوشش می‌ده (بدون تغییر UI) function getCustomerDis
+
+[وابستگی] | src/components/sections/orders/OrdersTable.jsx
+  context: }    // snapshot های نوێ داواکاری (بدون وابستگی به AppUser)   const checkoutName =     
+
+[فیلدهای] | src/components/sections/orders/OrdersTable.jsx
+  context: ;    // fallback مۆبایل‌های checkout یا فیلدهای قدیمی   const checkoutMobile =     Stri
+
+[احتمالی] | src/components/sections/orders/OrdersTable.jsx
+  context: turn checkoutMobile;    // fallback های احتمالی   const any =     String(o?.customer ??
+
+[استفاده] | src/components/sections/orders/OrdersTable.jsx
+  context: : invoiceNo,     total, // OrderRow لەش استفاده می‌کنه     invoice: `${Number(total || 
+
+[کنه] | src/components/sections/orders/OrdersTable.jsx
+  context: ,     total, // OrderRow لەش استفاده می‌کنه     invoice: `${Number(total || 0).toLo
+
+[بده] | src/components/sections/orders/OrdersTable.jsx
+  context: مکنه {data} یا {items} یا {data:{data}} بده     const payload = out?.data ?? out;  
+
+[برگردونه] | src/components/sections/orders/OrdersTable.jsx
+  context:         // ✅ بک ممکنه full رو داخل data برگردونه       const raw = full?.data ?? full;  
+
+[اینجاست] | src/components/sections/orders/OrdersTable.jsx
+  context: .createdAt) : order.date,          // ✅ اینجاست که ناو بەکارهێنەر دقیق می‌شه         cu
+
+[دقیق] | src/components/sections/orders/OrdersTable.jsx
+  context:          // ✅ اینجاست که ناو بەکارهێنەر دقیق می‌شه         customer: getCustomerDisp
+
+[شه] | src/components/sections/orders/OrdersTable.jsx
+  context:  // ✅ اینجاست که ناو بەکارهێنەر دقیق می‌شه         customer: getCustomerDisplay(ra
+
+[فاکتوور] | src/components/sections/orders/OrdersTable.jsx
+  context:  <span>کد داواکاری</span>         <span>فاکتوور</span>         <span>دۆخ</span>        
+
+[نەدۆزرایەوە] | src/components/sections/orders/OrdersTable.jsx
+  context: xt-center text-sm text-gray-500">سفارشی نەدۆزرایەوە</div>         ) : (           orders.ma
+
+[رایج] | src/components/sections/products/AddProductForm.jsx
+  context:    return res; }  // ✅ چوونەدەرەوەی‌های رایج بک: { data:[...] } یا { items:[...] } ی
+
+[بۆگل] | src/components/sections/products/AddProductForm.jsx
+  context: ainImage, null));    // ✅ خیلی مهم برای بۆگل چالاک/ناچالاک:   // اگر بک لە isActive 
+
+[چالاک] | src/components/sections/products/AddProductForm.jsx
+  context: age, null));    // ✅ خیلی مهم برای بۆگل چالاک/ناچالاک:   // اگر بک لە isActive / isHi
+
+[ناچالاک] | src/components/sections/products/AddProductForm.jsx
+  context: ull));    // ✅ خیلی مهم برای بۆگل چالاک/ناچالاک:   // اگر بک لە isActive / isHidden است
+
+[کنه،] | src/components/sections/products/AddProductForm.jsx
+  context: گر بک لە isActive / isHidden استفاده می‌کنه، اینجا نگه می‌داریم که با آپدیت فرم لە د
+
+[اینجا] | src/components/sections/products/AddProductForm.jsx
+  context:  لە isActive / isHidden استفاده می‌کنه، اینجا نگه می‌داریم که با آپدیت فرم لە دست نره
+
+[نگه] | src/components/sections/products/AddProductForm.jsx
+  context: Active / isHidden استفاده می‌کنه، اینجا نگه می‌داریم که با آپدیت فرم لە دست نره   c
+
+[داریم] | src/components/sections/products/AddProductForm.jsx
+  context: / isHidden استفاده می‌کنه، اینجا نگه می‌داریم که با آپدیت فرم لە دست نره   const isAc
+
+[آپدیت] | src/components/sections/products/AddProductForm.jsx
+  context: ستفاده می‌کنه، اینجا نگه می‌داریم که با آپدیت فرم لە دست نره   const isActive = Boole
+
+[دست] | src/components/sections/products/AddProductForm.jsx
+  context: ، اینجا نگه می‌داریم که با آپدیت فرم لە دست نره   const isActive = Boolean(p.isActi
+
+[ساعت] | src/components/sections/products/DateTimePicker.jsx
+  context: meIntervals={15}           timeCaption="ساعت"           dateFormat="yyyy/MM/dd HH:mm
+
+[تونه] | src/components/sections/products/ImageUploader.jsx
+  context: );    useEffect(() => {     // value می‌تونه File یا URL(string) یا null باشه     if
+
+[نا] | src/components/sections/products/MobileProductRow.jsx
+  context: tockStatus =     product.stock === 0 ? "نا موجود" : product.stock < 10 ? "کم" : "م
+
+[رایگان] | src/components/sections/products/ProductForm.jsx
+  context: nput label=":ناردن بەرهەم" placeholder="رایگان ناردن" />         <FormInput label=":ڕێ
+
+[داگرتن] | src/components/sections/products/ProductsHeader.jsx
+  context: open, setOpen] = useState(false);    // داگرتن Excel واقعی   const exportToExcel = () 
+
+[کم] | src/components/sections/products/ProductsRow.jsx
+  context:  0 ? "نا موجود" : product.stock < 10 ? "کم" : "موجود";    const goToEditProduct = 
+
+[پیدا] | src/components/sections/products/ProductsTable.jsx
+  context: id) => {     if (!id) return;      // ✅ پیدا کردن بەرهەم با هر نوع id برای جلوگیری ل
+
+[حروف] | src/components/sections/products/SortDropdown.jsx
+  context: -react";  const options = [   { label: "حروف الفبا A-Z", icon: ArrowDownAZ, key: "na
+
+[بخش] | src/components/sections/report/Boxes.jsx
+  context:   }, [selectedDate, type]);    // ✅ این بخش فقط شکل داده را با UI شما سلەگار می‌کند
+
+[دیروز] | src/components/sections/report/ReportsHeader.jsx
+  context: روز", value: "today" },       { label: "دیروز", value: "yesterday" },       { label: 
+
+[دلکو] | src/components/sections/report/topProductsData.js
+  context:    {     id: 4,     title: "ماسک مو مدل دلکو",     salesCount: 4,     totalSales: 42
+
+[جهان] | src/components/sections/users/usersData.js.js
+  context: ersData  = [   { id: 1, username: "سارا جهان بخش", registerDate: "1404/11/5", netPro
+
+[نوع] | src/components/sections/users/UsersTable.jsx
+  context: t: "-createdAt" });        // ✅ FIX: هر نوع response را به لیست تبدیل کن       cons
+
+[محدود] | src/components/ui/BaseModal.jsx
+  context: rtl"     >       {/* ✅ container height محدود + مۆبایل-friendly */}       <div       
+
+[بیاد] | src/hooks/useOrders.js
+  context: d;    // ✅ user ممکنه در userId یا user بیاد   const user = o?.userId || o?.user || 
+
+[ست] | src/lib/apiClient.js
+  context: // ✅ فقط وقتی FormData نیست JSON header ست کن   if (!isFormData && !h["Content-Typ
+
+[آیتم] | src/lib/dashboardApi.js
+  context: ngCost ?? 0);    // فروش داواکاری = جمع آیتم‌ها - تخفیف + پول ناردن کڕیار   return M
+
+[همون] | src/lib/reportsApi.js
+  context: e,   }); }  /**  * ✅ NEW: چوونەژوورەوەی همون selectedDate UI شماست: "امروز" | "دیروز
+
+[هنوز] | src/services/orders.service.js
+  context: .toUpperCase(), note },   }); }  // اگر هنوز روت DELETE نداری، فعلاً لە UI سڕینەوە ن
+

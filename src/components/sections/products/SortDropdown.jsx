@@ -8,11 +8,11 @@ import {
 } from "lucide-react";
 
 const options = [
-  { label: "حروف الفبا A-Z", icon: ArrowDownAZ, key: "name", ascending: true },
-  { label: "حروف الفبا Z-A", icon: ArrowUpZA, key: "name", ascending: false },
-  { label: "کمترین قیمت", icon: ArrowDownWideNarrow, key: "price", ascending: true },
-  { label: "بیشترین قیمت", icon: ArrowUpWideNarrow, key: "price", ascending: false },
-  { label: "کمترین موجودی", icon: Archive, key: "stock", ascending: true },
+  { label: "پیتەکان A-Z", icon: ArrowDownAZ, key: "name", ascending: true },
+  { label: "پیتەکان Z-A", icon: ArrowUpZA, key: "name", ascending: false },
+  { label: "کەمترین نرخ", icon: ArrowDownWideNarrow, key: "price", ascending: true },
+  { label: "زۆرترین نرخ", icon: ArrowUpWideNarrow, key: "price", ascending: false },
+  { label: "کەمترین کۆگا", icon: Archive, key: "stock", ascending: true },
 ];
 
 export default function SortDropdown({ products, setProducts, closeDropdown }) {
@@ -44,6 +44,7 @@ export default function SortDropdown({ products, setProducts, closeDropdown }) {
             key={i}
             onClick={() => handleSort(item.key, item.ascending)}
             className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm hover:bg-gray-100"
+            type="button"
           >
             <span>{item.label}</span>
             <div className="flex items-center gap-2">

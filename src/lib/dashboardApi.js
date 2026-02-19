@@ -1,102 +1,134 @@
 // dashboard/src/lib/dashboardApi.js
 import { apiClient } from "./apiClient.js";
 
+function computeOrderTotal(order) {
+  const items = Array.isArray(order?.items) ? order.items : [];
+  const grossItems = items.reduce((s, it) => {
+    const p = Number(it?.price ?? 0);
+    const q = Number(it?.quantity ?? 0);
+    return s + p * q;
+  }, 0);
+
+  const discount = Number(order?.discount ?? 0);
+  const shippingCost = Number(order?.shippingCost ?? 0);
+
+  // فروش سفارش = جمع آیتم‌ها - تخفیف + پول ارسال مشتری
+  return Math.max(0, grossItems - discount + shippingCost);
+}
+
+function formatIQD(n) {
+  const num = Number(n ?? 0);
+  return `${num.toLocaleString()} IQD`;
+}
+
+function getCustomerName(order) {
+  const u = order?.userId;
+
+  if (u?.fullName) return u.fullName;
+
+  const fn = String(u?.firstName ?? "").trim();
+  const ln = String(u?.lastName ?? "").trim();
+  const joined = `${fn} ${ln}`.trim();
+  if (joined) return joined;
+
+  if (u?.name) return u.name;
+  if (order?.customerName) return order.customerName;
+  if (order?.name) return order.name;
+
+  // fallback: موبایل (بهتر لە خط تیره)
+  if (u?.mobile) return u.mobile;
+
+  return "—";
+}
+
+function mapStatus(order) {
+  const st = String(order?.status ?? "").trim().toUpperCase();
+
+  const map = {
+    PENDING: { key: "pending", label: "لە انتظار بررسی" },
+    ACCEPTED: { key: "complete", label: "تایید کراوە" },
+    COMPLETED: { key: "complete", label: "تکمیل کراوە" },
+    COMPLETE: { key: "complete", label: "تکمیل کراوە" },
+    REJECTED: { key: "rejected", label: "رد کراوە" },
+    CANCELED: { key: "rejected", label: "لغو کراوە" },
+    CANCELLED: { key: "rejected", label: "لغو کراوە" },
+  };
+
+  return map[st] ?? { key: "pending", label: st || "—" };
+}
+
+function normalizeLatestOrdersResponse(res) {
+  const payload = res?.data ?? res;
+  const rows = Array.isArray(payload?.data)
+    ? payload.data
+    : Array.isArray(payload?.items)
+      ? payload.items
+      : Array.isArray(payload)
+        ? payload
+        : [];
+
+  return rows.map((o) => {
+    const id = String(o?.invoiceNumber ?? o?._id ?? "").slice(-6);
+
+    const status = mapStatus(o);
+    const total = computeOrderTotal(o);
+
+    return {
+      id,
+      customer: getCustomerName(o),
+      price: formatIQD(total),
+      status: status.key,
+      statusLabel: status.label,
+
+      _raw: o,
+      _mongoId: o?._id,
+    };
+  });
+}
+
+// ✅ آخرین سفارش‌ها (بۆ هوم داشبورد)
+export async function fetchLatestOrders(limit = 6) {
+  const l = Math.min(6, Math.max(1, Number(limit || 6)));
+
+  const out = await apiClient(`/admin/orders?limit=${l}&sort=-createdAt`, {
+    method: "GET",
+    auth: true,
+  });
+
+  return normalizeLatestOrdersResponse(out);
+}
+
 /**
- * بک شما (طبق چیزی که قبلاً زدید) اینا رو داشت:
- * - GET /admin/orders?limit=10
- * - GET /admin/reports-range  (یا چیزی شبیه این)
+ * ✅ Top Products واقعی
+ * بک شما: GET /admin/reports-summary?period=today
+ * خروجی: { topProducts: [{ productId, title, salesCount, ... }], ... }
  *
- * اگر اسم endpoint فرق داشت، فقط همین فایل رو اصلاح می‌کنی.
+ * اینجا فقط topProducts را normalize میکنیم تا UI راحت بخونه:
+ * [{ id, title, count }]
  */
+export async function fetchTopProducts(limit = 6) {
+  const l = Math.min(6, Math.max(1, Number(limit || 6)));
 
-function safeFaDate(d) {
-  try {
-    return new Date(d).toLocaleDateString("fa-IR");
-  } catch {
-    return "-";
-  }
-}
+  const out = await apiClient("/admin/reports-summary?period=today", {
+    method: "GET",
+    auth: true,
+  });
 
-function normalizeOrderRow(o) {
-  const id = o?._id || o?.id || o?.invoiceNumber || "-";
-  const total = o?.total != null ? `${Number(o.total).toLocaleString()} IQD` : "-";
+  const payload = out?.data ?? out ?? {};
+  const rows = Array.isArray(payload?.topProducts) ? payload.topProducts : [];
 
-  const user = o?.userId || o?.user || {};
-  const customer =
-    `${user?.firstName || ""} ${user?.lastName || ""}`.trim() ||
-    user?.phone1 ||
-    o?.customer ||
-    "-";
-
-  const status = o?.status || "pending";
-
-  const statusLabelMap = {
-    pending: "در انتظار بررسی",
-    complete: "تکمیل شده",
-    rejected: "لغو شده",
-    canceled: "لغو شده",
-  };
-
-  return {
-    id,
-    customer,
-    price: total,
-    status,
-    statusLabel: statusLabelMap[status] || status,
-    date: safeFaDate(o?.createdAt),
-    invoice: total,
-    items: o?.items || [],
-    user,
-    address: o?.address,
-    city: o?.city,
-  };
-}
-
-export async function fetchLatestOrders(limit = 10) {
-  const res = await apiClient(`/admin/orders?limit=${limit}`, { auth: true });
-
-  // بعضی وقت‌ها بک {items:[], total:..} میده، بعضی وقت‌ها مستقیم آرایه
-  const list = Array.isArray(res) ? res : (res?.items || res?.data || []);
-  return list.map(normalizeOrderRow);
-}
-
-export async function fetchOrderById(id) {
-  return apiClient(`/admin/orders/${id}`, { auth: true });
+  return rows.slice(0, l).map((x, idx) => ({
+    id: String(x?.productId ?? x?._id ?? idx),
+    title: String(x?.title ?? x?.name_en ?? x?.name ?? "—"),
+    count: Number(x?.salesCount ?? x?.count ?? 0),
+    _raw: x,
+  }));
 }
 
 export async function fetchDashboardStats() {
-  // اگر endpoint واقعی‌ت فرق داشت اینو عوض کن
-  const res = await apiClient(`/admin/reports-range`, { auth: true });
-
-  // سعی می‌کنیم چند حالت مختلف رو پشتیبانی کنیم
-  return {
-    newOrders: res?.newOrders ?? res?.ordersToday ?? 0,
-    salesToday: res?.salesToday ?? res?.totalToday ?? 0,
-    netProfitToday: res?.netProfitToday ?? res?.profitToday ?? 0,
-  };
-}
-
-export async function fetchSalesLast7Days() {
-  // اگر بک endpoint مخصوص نمودار داشت، اینجا بزن.
-  // فعلاً از reports-range اگر چیزی داشت می‌کشیم، وگرنه [] می‌دیم.
-  const res = await apiClient(`/admin/reports-range`, { auth: true });
-
-  // انتظار: [{day:'شنبه', value:123}] یا چیزی شبیه
-  const rows = res?.salesLast7Days || res?.chart7days || [];
-  return Array.isArray(rows) ? rows : [];
-}
-
-export async function fetchTopProducts(limit = 10) {
-  // اگر بک endpoint جدا برای top products نداره، فعلاً خالی برگرده تا mock بمونه
-  const res = await apiClient(`/admin/reports-range`, { auth: true });
-
-  const rows = res?.topProducts || [];
-  if (!Array.isArray(rows)) return [];
-
-  // نرمال به فرمت UI شما: {id,title,count}
-  return rows.slice(0, limit).map((x, idx) => ({
-    id: x?._id || x?.id || idx + 1,
-    title: x?.title || x?.name_en || x?.name || "—",
-    count: x?.count ?? x?.salesCount ?? 0,
-  }));
+  const out = await apiClient("/admin/reports-summary?period=today", {
+    method: "GET",
+    auth: true,
+  });
+  return out?.data ?? out;
 }

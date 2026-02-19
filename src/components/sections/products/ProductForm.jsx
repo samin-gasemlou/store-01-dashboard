@@ -12,7 +12,7 @@ export default function ProductForm() {
       <div className="grid grid-cols-4 gap-4 text-right">
         <FormInput label=":کد محصول" placeholder="338875" />
         <FormInput label=":ارسال محصول" placeholder="رایگان ارسال" />
-        <FormInput label=":تاریخ انقضا محصول" placeholder="1404/11/30" />
+        <FormInput label=":ڕێکەوت انقضا محصول" placeholder="1404/11/30" />
         <FormInput label=":عنوان محصول" placeholder="Kenta moroccan cream" />
       </div>
 
@@ -28,7 +28,7 @@ export default function ProductForm() {
       {/* ROW 3 */}
       <div className="grid grid-cols-3 gap-4">
         <FormInput
-          label="تاریخ انقضا تخفیف:"
+          label="ڕێکەوت انقضا تخفیف:"
           placeholder="2026/03/25 — ساعت 00:00"
         />
         <FormInput label="برند:" placeholder="Dior" />
@@ -36,9 +36,9 @@ export default function ProductForm() {
       </div>
 
       {/* TEXTAREAS */}
-      <FormTextarea label="توضیحات به انگلیسی:" />
-      <FormTextarea label="توضیحات به عربی:" />
-      <FormTextarea label="توضیحات به کردی:" />
+      <FormTextarea label="توضیحات بە انگلیسی:" />
+      <FormTextarea label="توضیحات بە عربی:" />
+      <FormTextarea label="توضیحات بە کردی:" />
 
       {/* ACTIONS */}
       <FormActions />

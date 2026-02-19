@@ -1,9 +1,8 @@
-// dashboard/src/components/pages/Signup.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthCard from "../sections/auth/AuthCard";
 import AuthInput from "../sections/auth/AuthInput";
-import { api } from "../../api/client";
+import { api } from "../../lib/apiClient";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -33,13 +32,12 @@ export default function Signup() {
         },
       });
 
-      // اگر بک پیام یا data داد، مشکلی نیست
       void res;
 
-      setOk("User created");
+      setOk("هەژمار درووست کرا");
       setTimeout(() => nav("/login"), 400);
     } catch (e2) {
-      setErr(e2?.message || "Register failed");
+      setErr(e2?.message || "درووستکردنی هەژمار سەرکەوتوو نەبوو");
     } finally {
       setLoading(false);
     }
@@ -47,30 +45,30 @@ export default function Signup() {
 
   return (
     <section className="min-h-screen w-full flex items-center justify-center px-4 py-10 bg-white">
-      <AuthCard title="Sign up">
+      <AuthCard title="درووستکردنی هەژمار">
         <form onSubmit={submit} className="space-y-5">
           <AuthInput
-            placeholder="Name"
+            placeholder="ناو"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
 
           <AuthInput
-            placeholder="Email"
+            placeholder="ئیمەیڵ"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <AuthInput
-            placeholder="Password"
+            placeholder="وشەی نهێنی"
             type="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
           />
 
           <AuthInput
-            placeholder="Role (admin / employee)"
+            placeholder="ڕۆڵ (admin / employee)"
             value={role}
             onChange={(e) => setRole(e.target.value)}
           />
@@ -97,13 +95,13 @@ export default function Signup() {
               disabled:opacity-60
             "
           >
-            {loading ? "Loading..." : "Sign up"}
+            {loading ? "لە حال درووستکردن..." : "درووستکردنی هەژمار"}
           </button>
 
           <p className="text-center text-[18px] pt-2">
-            Already have an account?{" "}
+            پێشتر هەژمارت هەیە؟{" "}
             <Link to="/login" className="text-blue-600">
-              Go to Login
+              بڕۆ بۆ چوونەژوورەوە
             </Link>
           </p>
         </form>

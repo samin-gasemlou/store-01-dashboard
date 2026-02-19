@@ -1,5 +1,5 @@
 // dashboard/src/components/sections/products/AddProductForm.jsx
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import TextInput from "./TextInput";
@@ -14,6 +14,23 @@ import {
   updateProduct,
   fetchProductById,
 } from "../../../services/products.service.js";
+
+import { fetchCategories } from "../../../services/categories.service.js";
+import { fetchBrands } from "../../../services/brands.service.js";
+
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ||
+  "http://localhost:4000/api/v1";
+
+const API_ORIGIN = API_BASE.replace(/\/api\/v1$/, "");
+
+function resolveAssetUrl(u) {
+  if (!u) return null;
+  if (typeof u !== "string") return null;
+  if (u.startsWith("http://") || u.startsWith("https://")) return u;
+  if (u.startsWith("/uploads/")) return `${API_ORIGIN}${u}`;
+  return u;
+}
 
 function toISOorEmpty(d) {
   if (!d) return "";
@@ -39,123 +56,161 @@ function safeDateOrNull(v) {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
+// ✅ unwrap helper: پوشش data.data و انواع ساختارها
+function unwrapApi(res) {
+  if (!res) return null;
+  if (res?.data?.data) return res.data.data;
+  if (res?.data) return res.data;
+  return res;
+}
+
+// ✅ خروجی‌های رایج بک: { data:[...] } یان { items:[...] } یان خود آرایه
+function unwrapList(res) {
+  const p = unwrapApi(res);
+  if (Array.isArray(p)) return p;
+  if (Array.isArray(p?.data)) return p.data;
+  if (Array.isArray(p?.items)) return p.items;
+  return [];
+}
+
 function mapBackendToForm(raw) {
   const p = raw || {};
 
-  // بک شما می‌گه name_en و categoryName required هست
-  const name_en = pickFirst(p.name_en, p.nameEn, p.title_en, p.enName, "");
-  const categoryName = pickFirst(p.categoryName, p.category_name, p.category, "");
+  const name_en = pickFirst(p.name_en, p.nameEn, p.name, "");
+  const categoryName = pickFirst(p.categoryName, p.category, "");
+  const subCategoryName = pickFirst(p.subCategoryName, p.subCategory, "");
+  const brandName = pickFirst(p.brandName, p.brand, "");
+  const barcode = pickFirst(p.barcode, p.code, "");
 
-  // برای نمایش در UI
-  const title = pickFirst(p.title, p.name_fa, p.name, "");
-  const code = pickFirst(p.code, p.sku, p.productCode, "");
+  const expireDate = pickFirst(p.expireDate, p.expire_at, null);
 
-  const expiryDate = pickFirst(p.expiryDate, p.expireDate, p.expiresAt);
-  const discountStart = pickFirst(p.discountStart, p.discountStartAt, p.discountFrom);
-  const discountEnd = pickFirst(p.discountEnd, p.discountEndAt, p.discountTo);
+  const price = pickFirst(p.price, "");
+  const costPrice = pickFirst(p.costPrice, "");
+  const wholesalePrice = pickFirst(p.wholesalePrice, "");
+  const discountPercent = pickFirst(p.discountPercent, "");
 
-  const sale = pickFirst(p.price, p.salePrice, p.prices?.sale, "");
-  const purchase = pickFirst(p.costPrice, p.purchasePrice, p.buyPrice, p.prices?.purchase, "");
+  const stock = pickFirst(p.stock, 0);
 
-  const wholesale = pickFirst(p.wholesalePrice, p.prices?.wholesale, "");
-  const discounted = pickFirst(p.discountPrice, p.discountedPrice, p.prices?.discounted, "");
+  const descriptionEN = pickFirst(
+    p.description_en,
+    p.descriptionEN,
+    p.description?.en,
+    ""
+  );
+  const descriptionAR = pickFirst(
+    p.description_ar,
+    p.descriptionAR,
+    p.description?.ar,
+    ""
+  );
+  const descriptionKR = pickFirst(
+    p.description_kur,
+    p.descriptionKR,
+    p.description?.kur,
+    p.description?.ku,
+    ""
+  );
 
-  const brand = pickFirst(p.brand?._id, p.brandId, p.brand, "");
+  const freeShipping = Boolean(p.freeShipping ?? false);
 
-  const descriptionEN = pickFirst(p.descriptionEN, p.description_en, p.desc_en, "");
-  const descriptionAR = pickFirst(p.descriptionAR, p.description_ar, p.desc_ar, "");
-  const descriptionKR = pickFirst(p.descriptionKR, p.description_kr, p.desc_kr, "");
+  const mainImage = resolveAssetUrl(pickFirst(p.mainImage, null));
 
-  const freeShipping = Boolean(p.freeShipping ?? p.isFreeShipping ?? false);
-  const shippingIncluded = Boolean(p.shippingIncluded ?? p.isShippingIncluded ?? false);
-
-  // بک گفته mainImage required
-  const mainImage = pickFirst(p.mainImage, p.image, p.thumbnail, null);
+  // ✅ خیلی مهم بۆ تاگل فعال/غیرفعال:
+  // ئەگەر بک لە isActive / isHidden استفاده دە‌کنه، اینجا نگه دە‌داریم کە لەگەڵ آپدیت فرم لە دست نره
+  const isActive = Boolean(p.isActive ?? true);
+  const isHidden = Boolean(p.isHidden ?? false);
 
   return {
     form: {
-      title: title || "",
-      name_en: name_en || "",
-      code: code || "",
+      title: name_en || "",
+      code: barcode || "",
+
       categoryName: categoryName || "",
-      brand: brand || "",
+      subCategoryName: subCategoryName || "",
+
+      brand: brandName || "",
+      stock: String(stock ?? 0),
+
       prices: {
-        sale: sale !== "" && sale != null ? String(sale) : "",
-        wholesale: wholesale !== "" && wholesale != null ? String(wholesale) : "",
-        discounted: discounted !== "" && discounted != null ? String(discounted) : "",
-        purchase: purchase !== "" && purchase != null ? String(purchase) : "",
+        purchase: costPrice !== "" && costPrice != null ? String(costPrice) : "",
+        sale: price !== "" && price != null ? String(price) : "",
+        wholesale:
+          wholesalePrice !== "" && wholesalePrice != null
+            ? String(wholesalePrice)
+            : "",
+        discounted:
+          discountPercent !== "" && discountPercent != null
+            ? String(discountPercent)
+            : "",
       },
+
+      freeShipping,
+      shippingIncluded: false,
+      mainImage,
       descriptionEN,
       descriptionAR,
       descriptionKR,
-      freeShipping,
-      shippingIncluded,
-      mainImage,
+
+      // ✅ hidden fields (بدون UI)
+      isActive,
+      isHidden,
     },
-    productExpire: safeDateOrNull(expiryDate),
-    discountStart: safeDateOrNull(discountStart),
-    discountEnd: safeDateOrNull(discountEnd),
+    productExpire: safeDateOrNull(expireDate),
+    discountExpire: null, // UI only
   };
 }
 
-/**
- * ✅ بک شما required ها رو می‌خواد: name_en, categoryName, costPrice, price, mainImage
- * ✅ پس همیشه FormData می‌فرستیم
- */
-function buildFormData({ form, productExpire, discountStart, discountEnd, isEdit }) {
+function buildFormData({ form, productExpire, isEdit }) {
   const fd = new FormData();
 
-  // ---------- REQUIRED ----------
-  fd.append("name_en", form.name_en || "");
-  fd.append("categoryName", form.categoryName || "");
+  fd.append("name_en", String(form.title || "").trim());
+  fd.append("categoryName", String(form.categoryName || "").trim());
+  fd.append("subCategoryName", String(form.subCategoryName || "").trim());
+  fd.append("brandName", String(form.brand || "").trim());
+  fd.append("barcode", String(form.code || "").trim());
 
-  // price / costPrice
-  const price = form.prices?.sale !== "" ? Number(form.prices.sale) : "";
-  const costPrice = form.prices?.purchase !== "" ? Number(form.prices.purchase) : "";
+  const sale = Number(form.prices.sale);
+  const cost = Number(form.prices.purchase);
+  const wholesale = Number(form.prices.wholesale);
 
-  fd.append("price", String(price));
-  fd.append("costPrice", String(costPrice));
+  fd.append("price", Number.isFinite(sale) ? String(sale) : "");
+  fd.append("costPrice", Number.isFinite(cost) ? String(cost) : "");
+  fd.append(
+    "wholesalePrice",
+    Number.isFinite(wholesale) ? String(wholesale) : ""
+  );
 
-  // mainImage
-  // نکته: در update بعضی بک‌ها اجازه میدن عکس ارسال نشه.
-  // ولی چون شما required اعلام شده، ما برای create حتما می‌فرستیم.
-  if (form.mainImage instanceof File) {
-    fd.append("mainImage", form.mainImage);
-  } else if (typeof form.mainImage === "string" && form.mainImage) {
-    // فقط اگر بک URL رو قبول کند
-    fd.append("mainImage", form.mainImage);
-  } else {
-    if (!isEdit) {
-      // create => required
-      fd.append("mainImage", "");
-    }
-    // update => می‌تونیم نفرستیم تا عکس قبلی بماند
-  }
-
-  // ---------- OPTIONAL / HELPFUL ----------
-  if (form.title) fd.append("title", form.title);
-  if (form.code) fd.append("code", form.code);
-  if (form.brand) fd.append("brand", String(form.brand));
+  const stockNum = Number(form.stock);
+  fd.append(
+    "stock",
+    Number.isFinite(stockNum) && stockNum >= 0 ? String(stockNum) : "0"
+  );
 
   fd.append("freeShipping", String(!!form.freeShipping));
-  fd.append("shippingIncluded", String(!!form.shippingIncluded));
 
-  const expiryISO = toISOorEmpty(productExpire);
-  if (expiryISO) fd.append("expiryDate", expiryISO);
+  if (form.mainImage instanceof File) {
+    fd.append("mainImage", form.mainImage);
+  } else {
+    if (!isEdit) fd.append("mainImage", "");
+  }
 
-  const ds = toISOorEmpty(discountStart);
-  if (ds) fd.append("discountStart", ds);
+  const expireISO = toISOorEmpty(productExpire);
+  if (expireISO) fd.append("expireDate", expireISO);
 
-  const de = toISOorEmpty(discountEnd);
-  if (de) fd.append("discountEnd", de);
+  if (form.prices.discounted !== "") {
+    const dp = Number(form.prices.discounted);
+    if (Number.isFinite(dp)) fd.append("discountPercent", String(dp));
+  }
 
-  if (form.descriptionEN) fd.append("descriptionEN", form.descriptionEN);
-  if (form.descriptionAR) fd.append("descriptionAR", form.descriptionAR);
-  if (form.descriptionKR) fd.append("descriptionKR", form.descriptionKR);
+  fd.append("description_en", String(form.descriptionEN || ""));
+  fd.append("description_ar", String(form.descriptionAR || ""));
+  fd.append("description_kur", String(form.descriptionKR || ""));
 
-  // فیلدهای اضافه (اگر بعداً خواستی)
-  // if (form.prices?.wholesale !== "") fd.append("wholesalePrice", String(Number(form.prices.wholesale)));
-  // if (form.prices?.discounted !== "") fd.append("discountPrice", String(Number(form.prices.discounted)));
+  // ✅ کلیدی‌ترین بخش بۆ اینکه وقتی محصول غیرفعال شد،
+  // لە سایت اصلی هم نیاد و لەگەڵ ذخیره/ویرایش دوباره فعال نشه:
+  // (بدون تغییر UI فقط state رو پاس دە‌دیم)
+  fd.append("isActive", String(!!form.isActive));
+  fd.append("isHidden", String(!!form.isHidden));
 
   return fd;
 }
@@ -166,7 +221,11 @@ export default function AddProductForm() {
 
   const state = location.state || {};
   const isEdit = useMemo(
-    () => state?.mode === "edit" || !!state?.productId || !!state?.product?.id || !!state?.product?._id,
+    () =>
+      state?.mode === "edit" ||
+      !!state?.productId ||
+      !!state?.product?.id ||
+      !!state?.product?._id,
     [state]
   );
 
@@ -176,40 +235,127 @@ export default function AddProductForm() {
   );
 
   const [productExpire, setProductExpire] = useState(null);
-  const [discountStart, setDiscountStart] = useState(null);
-  const [discountEnd, setDiscountEnd] = useState(null);
+  const [discountExpire, setDiscountExpire] = useState(null);
 
   const [form, setForm] = useState({
     title: "",
-    name_en: "",
     code: "",
     categoryName: "",
+    subCategoryName: "",
     brand: "",
-    prices: { sale: "", wholesale: "", discounted: "", purchase: "" },
-    descriptionEN: "",
-    descriptionAR: "",
-    descriptionKR: "",
+    stock: "0",
+    prices: { purchase: "", sale: "", wholesale: "", discounted: "" },
     freeShipping: false,
     shippingIncluded: false,
     mainImage: null,
+    descriptionEN: "",
+    descriptionAR: "",
+    descriptionKR: "",
+
+    // ✅ hidden fields (بدون UI)
+    isActive: true,
+    isHidden: false,
   });
 
   const [loading, setLoading] = useState(false);
   const [initialSnapshot, setInitialSnapshot] = useState(null);
 
-  // فعلاً mock ها
-  const brands = ["Dior", "Chanel", "Gucci", "Prada"];
-  const categories = ["make up", "perfume"];
+  const [brandOptions, setBrandOptions] = useState([]);
+  const [catsRaw, setCatsRaw] = useState([]);
+
+  // ✅ جلوگیری لە ریست شدن subCategoryName هنگام hydrate ادیت
+  const skipSubResetRef = useRef(false);
 
   const handleChange = (field, value) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
   const handlePriceChange = (field, value) =>
-    setForm((prev) => ({ ...prev, prices: { ...prev.prices, [field]: value } }));
+    setForm((prev) => ({
+      ...prev,
+      prices: { ...prev.prices, [field]: value },
+    }));
 
-  // ✅ Prefill برای Edit
   useEffect(() => {
     let alive = true;
+
+    const loadOptions = async () => {
+      try {
+        const [catsRes, brandsRes] = await Promise.all([
+          fetchCategories({ page: 1, limit: 500 }),
+          fetchBrands({ page: 1, limit: 500 }),
+        ]);
+
+        const cats = unwrapList(catsRes);
+        const brands = unwrapList(brandsRes);
+
+        if (!alive) return;
+
+        setCatsRaw(cats);
+
+        setBrandOptions(
+          brands
+            .map((b) => String(b?.name || "").trim())
+            .filter(Boolean)
+        );
+      } catch (e) {
+        console.error("load categories/brands failed:", e);
+        if (!alive) return;
+        setCatsRaw([]);
+        setBrandOptions([]);
+      }
+    };
+
+    loadOptions();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const parentCategoryOptions = useMemo(() => {
+    const parents = catsRaw.filter((c) => !c?.parentId);
+    return parents.map((c) => c?.name_en).filter(Boolean);
+  }, [catsRaw]);
+
+  const subCategoryOptions = useMemo(() => {
+    if (!form.categoryName) return [];
+    const parent = catsRaw.find((c) => c?.name_en === form.categoryName);
+    if (!parent?._id) return [];
+
+    const subs = catsRaw.filter(
+      (c) => String(c?.parentId) === String(parent._id)
+    );
+
+    return subs.map((c) => c?.name_en).filter(Boolean);
+  }, [catsRaw, form.categoryName]);
+
+  // ✅ فقط وقتی کاربر دستی categoryName رو تغییر داد، sub رو ریست کن
+  useEffect(() => {
+    if (skipSubResetRef.current) {
+      skipSubResetRef.current = false;
+      return;
+    }
+    setForm((p) => ({ ...p, subCategoryName: "" }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.categoryName]);
+
+  useEffect(() => {
+    let alive = true;
+
+    const hasAr = (obj) =>
+      pickFirst(
+        obj?.description_ar,
+        obj?.descriptionAR,
+        obj?.description?.ar,
+        ""
+      ) !== "";
+    const hasKr = (obj) =>
+      pickFirst(
+        obj?.description_kur,
+        obj?.descriptionKR,
+        obj?.description?.kur,
+        obj?.description?.ku,
+        ""
+      ) !== "";
 
     const hydrate = async () => {
       if (!isEdit) {
@@ -221,35 +367,42 @@ export default function AddProductForm() {
         setLoading(true);
 
         const rawFromState = state?.product?.__raw || state?.product || null;
+        const stateIsIncomplete =
+          rawFromState &&
+          (!hasAr(rawFromState) ||
+            !hasKr(rawFromState) ||
+            !rawFromState?.subCategoryName);
 
-        if (rawFromState) {
+        if (rawFromState && !stateIsIncomplete) {
           const mapped = mapBackendToForm(rawFromState);
           if (!alive) return;
 
+          skipSubResetRef.current = true;
+
           setForm(mapped.form);
           setProductExpire(mapped.productExpire);
-          setDiscountStart(mapped.discountStart);
-          setDiscountEnd(mapped.discountEnd);
+          setDiscountExpire(mapped.discountExpire);
           setInitialSnapshot(mapped);
           return;
         }
 
         if (editingId) {
           const res = await fetchProductById(editingId);
-          const raw = res?.data || res;
-
+          const raw = unwrapApi(res);
           const mapped = mapBackendToForm(raw);
+
           if (!alive) return;
+
+          skipSubResetRef.current = true;
 
           setForm(mapped.form);
           setProductExpire(mapped.productExpire);
-          setDiscountStart(mapped.discountStart);
-          setDiscountEnd(mapped.discountEnd);
+          setDiscountExpire(mapped.discountExpire);
           setInitialSnapshot(mapped);
         }
       } catch (e) {
         console.error("prefill edit failed:", e);
-        alert(e?.message || "خطا در دریافت اطلاعات محصول برای ویرایش");
+        alert(e?.message || "خطا لە دریافت اطلاعات محصول بۆ ویرایش");
       } finally {
         if (alive) setLoading(false);
       }
@@ -261,33 +414,88 @@ export default function AddProductForm() {
     };
   }, [isEdit, editingId, state]);
 
+  const validate = () => {
+    const errors = [];
+
+    if (!form.title || form.title.trim().length < 2)
+      errors.push("عنوان محصول الزامی ە.");
+    if (!form.code || form.code.trim().length < 1)
+      errors.push("کد محصول الزامی ە.");
+
+    if (!form.brand || form.brand.trim().length < 1)
+      errors.push("برند الزامی ە.");
+
+    if (!form.categoryName || form.categoryName.trim().length < 1)
+      errors.push("دسته‌بندی اصلی الزامی ە.");
+
+    if (!form.subCategoryName || form.subCategoryName.trim().length < 1)
+      errors.push("زیر دسته‌بندی الزامی ە.");
+
+    const cost = Number(form.prices.purchase);
+    const sale = Number(form.prices.sale);
+    const wholesale = Number(form.prices.wholesale);
+
+    if (!Number.isFinite(sale) || sale <= 0)
+      errors.push("قیمت فروش الزامی و باید معتبر باشد.");
+    if (!Number.isFinite(cost) || cost < 0)
+      errors.push("قیمت خرید الزامی و باید معتبر باشد.");
+    if (!Number.isFinite(wholesale) || wholesale < 0)
+      errors.push("قیمت عمده الزامی و باید معتبر باشد.");
+
+    const stock = Number(form.stock);
+    if (!Number.isFinite(stock) || stock < 0)
+      errors.push("تعداد محصول الزامی و باید معتبر باشد.");
+
+    if (!productExpire) errors.push("ڕێکەوت انقضا محصول الزامی ە.");
+
+    if (!isEdit && !(form.mainImage instanceof File))
+      errors.push("بۆ افزودن محصول، انتخاب عکس الزامی ە.");
+
+    if (!form.descriptionEN?.trim()) errors.push("توضیحات انگلیسی الزامی ە.");
+    if (!form.descriptionAR?.trim()) errors.push("توضیحات عربی الزامی ە.");
+    if (!form.descriptionKR?.trim()) errors.push("توضیحات کوردی الزامی ە.");
+
+    if (form.prices.discounted !== "") {
+      const dp = Number(form.prices.discounted);
+      if (!Number.isFinite(dp) || dp < 0 || dp > 100) {
+        errors.push("قیمت فروش (تخفیف خورده) باید بین 0 تا 100 باشد.");
+      }
+      if (!discountExpire) {
+        errors.push(
+          "لە صورت وارد کردن قیمت تخفیف خورده، ڕێکەوت انقضا تخفیف الزامی ە."
+        );
+      }
+    }
+
+    return errors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const errs = validate();
+    if (errs.length) {
+      alert(errs.join("\n"));
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // ✅ required ها رو همیشه می‌فرستیم
-      const payload = buildFormData({
-        form,
-        productExpire,
-        discountStart,
-        discountEnd,
-        isEdit,
-      });
+      const payload = buildFormData({ form, productExpire, isEdit });
 
       if (isEdit && editingId) {
         await updateProduct(editingId, payload);
-        alert("محصول با موفقیت ویرایش شد!");
+        alert("محصول لەگەڵ سەرکەوتوو ویرایش شد!");
       } else {
         await createProduct(payload);
-        alert("محصول با موفقیت ذخیره شد!");
+        alert("محصول لەگەڵ سەرکەوتوو ذخیره شد!");
       }
 
-      // ✅ برگرد به محصولات + refresh (اگر Products.jsx این state رو listen کنه عالیه)
       navigate("/products", { replace: true, state: { refresh: Date.now() } });
     } catch (err) {
       console.error("save product failed:", err);
-      alert(err?.message || "خطا در ذخیره محصول");
+      alert(err?.message || "خطا لە ذخیره محصول");
     } finally {
       setLoading(false);
     }
@@ -295,41 +503,48 @@ export default function AddProductForm() {
 
   const onReset = () => {
     if (isEdit && initialSnapshot) {
+      skipSubResetRef.current = true;
       setForm(initialSnapshot.form);
       setProductExpire(initialSnapshot.productExpire);
-      setDiscountStart(initialSnapshot.discountStart);
-      setDiscountEnd(initialSnapshot.discountEnd);
+      setDiscountExpire(initialSnapshot.discountExpire);
       return;
     }
 
     setForm({
       title: "",
-      name_en: "",
       code: "",
       categoryName: "",
+      subCategoryName: "",
       brand: "",
-      prices: { sale: "", wholesale: "", discounted: "", purchase: "" },
-      descriptionEN: "",
-      descriptionAR: "",
-      descriptionKR: "",
+      stock: "0",
+      prices: { purchase: "", sale: "", wholesale: "", discounted: "" },
       freeShipping: false,
       shippingIncluded: false,
       mainImage: null,
+      descriptionEN: "",
+      descriptionAR: "",
+      descriptionKR: "",
+
+      // ✅ hidden fields (بدون UI)
+      isActive: true,
+      isHidden: false,
     });
 
     setProductExpire(null);
-    setDiscountStart(null);
-    setDiscountEnd(null);
+    setDiscountExpire(null);
   };
 
   return (
-    <form className="w-full bg-transparent rounded-2xl p-4 sm:p-6" onSubmit={handleSubmit}>
+    <form
+      className="w-full bg-transparent rounded-2xl p-4 sm:p-6"
+      onSubmit={handleSubmit}
+    >
       {/* ROW 1 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-4 sm:mb-6">
         <TextInput
-          label=":نام انگلیسی (required)"
-          value={form.name_en}
-          onChange={(v) => handleChange("name_en", v)}
+          label=":عنوان محصول"
+          value={form.title}
+          onChange={(v) => handleChange("title", v)}
         />
 
         <div className="flex flex-col gap-4 sm:gap-6 py-4">
@@ -341,7 +556,9 @@ export default function AddProductForm() {
               <input
                 type="checkbox"
                 checked={form.shippingIncluded}
-                onChange={(e) => handleChange("shippingIncluded", e.target.checked)}
+                onChange={(e) =>
+                  handleChange("shippingIncluded", e.target.checked)
+                }
               />
               شامل هزینه ارسال
             </label>
@@ -351,13 +568,22 @@ export default function AddProductForm() {
                 checked={form.freeShipping}
                 onChange={(e) => handleChange("freeShipping", e.target.checked)}
               />
-              رایگان است
+              رایگان ە
             </label>
           </div>
         </div>
 
-        <DateTimePicker label=":تاریخ انقضا محصول" value={productExpire} onChange={setProductExpire} />
-        <TextInput label=":کد محصول" value={form.code} onChange={(v) => handleChange("code", v)} />
+        <DateTimePicker
+          label=":ڕێکەوت انقضا محصول"
+          value={productExpire}
+          onChange={setProductExpire}
+        />
+
+        <TextInput
+          label=":کد محصول"
+          value={form.code}
+          onChange={(v) => handleChange("code", v)}
+        />
       </div>
 
       {/* ROW 2 */}
@@ -377,7 +603,7 @@ export default function AddProductForm() {
               onChange={(v) => handlePriceChange("sale", v)}
             />
             <PriceInput
-              label=":قیمت خرید (costPrice required)"
+              label=":قیمت خرید"
               value={form.prices.purchase}
               onChange={(v) => handlePriceChange("purchase", v)}
             />
@@ -387,7 +613,7 @@ export default function AddProductForm() {
               onChange={(v) => handlePriceChange("wholesale", v)}
             />
             <PriceInput
-              label=":قیمت تخفیف"
+              label=":قیمت فروش ( تخفیف خورده )"
               value={form.prices.discounted}
               onChange={(v) => handlePriceChange("discounted", v)}
             />
@@ -395,43 +621,65 @@ export default function AddProductForm() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              <DateTimePicker label=":شروع تخفیف" value={discountStart} onChange={setDiscountStart} />
-              <DateTimePicker label=":پایان تخفیف" value={discountEnd} onChange={setDiscountEnd} />
+              <DateTimePicker
+                label=":ڕێکەوت انقضا تخفیف"
+                value={discountExpire}
+                onChange={setDiscountExpire}
+              />
+
+              <TextInput
+                label=":تعداد محصول"
+                value={form.stock}
+                onChange={(v) =>
+                  handleChange("stock", String(v).replace(/\D/g, ""))
+                }
+                type="text"
+              />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <SelectInput
                 label=":برند"
                 value={form.brand}
-                options={brands}
+                options={brandOptions}
                 onChange={(v) => handleChange("brand", v)}
               />
 
               <SelectInput
-                label=":دسته بندی (required)"
+                label=":دسته بندی اصلی"
                 value={form.categoryName}
-                options={categories}
+                options={parentCategoryOptions}
                 onChange={(v) => handleChange("categoryName", v)}
               />
-            </div>
-          </div>
 
-          {/* optional UI fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <TextInput
-              label=":عنوان (اختیاری)"
-              value={form.title}
-              onChange={(v) => handleChange("title", v)}
-            />
+              <SelectInput
+                label=":زیر دسته بندی"
+                value={form.subCategoryName}
+                options={subCategoryOptions}
+                onChange={(v) => handleChange("subCategoryName", v)}
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {/* TEXTS */}
       <div className="space-y-4 sm:space-y-6">
-        <TextArea label=":توضیحات به انگلیسی" value={form.descriptionEN} onChange={(v) => handleChange("descriptionEN", v)} />
-        <TextArea label=":توضیحات به عربی" value={form.descriptionAR} onChange={(v) => handleChange("descriptionAR", v)} />
-        <TextArea label=":توضیحات به کردی" value={form.descriptionKR} onChange={(v) => handleChange("descriptionKR", v)} />
+        <TextArea
+          label=":توضیحات بە انگلیسی"
+          value={form.descriptionEN}
+          onChange={(v) => handleChange("descriptionEN", v)}
+        />
+        <TextArea
+          label=":توضیحات بە عربی"
+          value={form.descriptionAR}
+          onChange={(v) => handleChange("descriptionAR", v)}
+        />
+        <TextArea
+          label=":توضیحات بە کوردی"
+          value={form.descriptionKR}
+          onChange={(v) => handleChange("descriptionKR", v)}
+        />
       </div>
 
       {/* ACTIONS */}
@@ -449,7 +697,7 @@ export default function AddProductForm() {
           type="submit"
           className="px-6 sm:px-8 py-2 rounded-lg font-bold bg-[#2B4168] text-white text-xs sm:text-[10px]"
         >
-          {loading ? "در حال ذخیره..." : "ذخیره"}
+          {loading ? "لە حال ذخیره..." : "ذخیره"}
         </button>
       </div>
     </form>

@@ -8,7 +8,6 @@ export default function DateTimePicker({ label, value, onChange }) {
   const [startDate, setStartDate] = useState(value ? new Date(value) : null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setStartDate(value ? new Date(value) : null);
   }, [value]);
 
@@ -30,9 +29,9 @@ export default function DateTimePicker({ label, value, onChange }) {
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={15}
-          timeCaption="ساعت"
+          timeCaption="کات"
           dateFormat="yyyy/MM/dd HH:mm"
-          placeholderText="انتخاب تاریخ و ساعت"
+          placeholderText="ڕێکەوت و کات هەڵبژێرە"
           className="w-full h-full text-right text-xs sm:text-sm md:text-[13px] border-none focus:outline-none bg-transparent"
           calendarClassName="rounded-xl"
         />

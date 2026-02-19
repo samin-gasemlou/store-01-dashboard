@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { ChevronDown, Settings, Trash2 } from "lucide-react";
 
-export default function MobileBrandRow({ onEdit }) {
+export default function MobileBrandRow({ brand, onEdit, onDelete }) {
   const [open, setOpen] = useState(false);
+  const count = Number(brand?.productsCount ?? 0);
 
   return (
     <div className="bg-white rounded-xl border border-[#0000000D] overflow-hidden">
-      {/* HEADER */}
       <button
         onClick={() => setOpen((p) => !p)}
         className="w-full flex items-center justify-between px-4 py-4 text-right"
+        type="button"
       >
-        <span className="font-medium text-sm sm:text-base">آرایشی، بهداشتی</span>
+        <span className="font-medium text-sm sm:text-base">{brand?.name || "-"}</span>
 
         <ChevronDown
           size={18}
@@ -19,44 +20,34 @@ export default function MobileBrandRow({ onEdit }) {
         />
       </button>
 
-      {/* CONTENT */}
       <div
         className={`grid transition-all duration-300 ease-in-out ${
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >
         <div className="overflow-hidden px-4 pb-4 text-xs sm:text-sm space-y-3">
-          {/* COUNT */}
           <div className="flex justify-between">
-            <span>عدد 70</span>
-            <span className="font-semibold">:تعداد محصول موجود</span>
+            <span>{count} دانە</span>
+            <span className="font-semibold">:ژمارەی بەرهەمی بەردەست</span>
           </div>
 
-          {/* NAME */}
           <div className="flex justify-between">
-            <span>آرایشی، بهداشتی</span>
-            <span className="font-semibold">:نام برند</span>
+            <span>{brand?.name || "-"}</span>
+            <span className="font-semibold">:ناوی براند</span>
           </div>
 
-          {/* IMAGE */}
-          <div className="flex justify-between items-center">
-            <div className="w-12 h-12 border rounded-xl flex items-center justify-center">
-              <img src="/perfume.png" alt="" className="h-8 object-contain" />
-            </div>
-            <span className="font-semibold">:تصویر برند</span>
-          </div>
+          {/* ✅ تصویر حذف شد */}
 
-          {/* ACTIONS */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <button type="button" onClick={onEdit} className="p-1">
                 <Settings size={16} />
               </button>
-              <button type="button" className="p-1">
+              <button type="button" onClick={onDelete} className="p-1">
                 <Trash2 size={16} className="text-red-500" />
               </button>
             </div>
-            <span className="font-semibold">:عملیات</span>
+            <span className="font-semibold">:کردارەکان</span>
           </div>
         </div>
       </div>

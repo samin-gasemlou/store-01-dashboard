@@ -1,5 +1,5 @@
 // dashboard/src/components/sections/products/SelectInput.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function SelectInput({ label, value = "", options = [], onChange }) {
   const [open, setOpen] = useState(false);
@@ -10,10 +10,20 @@ export default function SelectInput({ label, value = "", options = [], onChange 
     setSelected(value || "");
   }, [value]);
 
-  const handleSelect = (option) => {
-    setSelected(option);
+  const normalizedOptions = useMemo(() => {
+    // options can be: ["A","B"] OR [{value,label}]
+    return (options || []).map((o) => {
+      if (o && typeof o === "object") {
+        return { value: String(o.value ?? ""), label: String(o.label ?? o.value ?? "") };
+      }
+      return { value: String(o ?? ""), label: String(o ?? "") };
+    });
+  }, [options]);
+
+  const handleSelect = (val) => {
+    setSelected(val);
     setOpen(false);
-    if (onChange) onChange(option);
+    if (onChange) onChange(val);
   };
 
   return (
@@ -32,13 +42,13 @@ export default function SelectInput({ label, value = "", options = [], onChange 
 
       {open && (
         <div className="absolute top-full mt-1 w-full bg-white border border-[#0000004D] rounded-xl shadow-lg z-10 max-h-48 overflow-auto">
-          {options.map((option, i) => (
+          {normalizedOptions.map((opt, i) => (
             <div
-              key={`${option}-${i}`}
-              onClick={() => handleSelect(option)}
+              key={`${opt.value}-${i}`}
+              onClick={() => handleSelect(opt.value)}
               className="px-3 py-2 text-right text-xs sm:text-sm md:text-[13px] hover:bg-gray-100 cursor-pointer"
             >
-              {option}
+              {opt.label}
             </div>
           ))}
         </div>

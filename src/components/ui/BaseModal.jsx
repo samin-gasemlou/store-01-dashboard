@@ -37,7 +37,7 @@ const BaseModal = ({ isOpen, onClose, title, children, size = "md" }) => {
           </button>
         </div>
 
-        {/* ✅ Body scroll داخل مودال (ارتفاع زیاد در موبایل حل میشه) */}
+        {/* ✅ Body scroll داخل مودال (ارتفاع زیاد لە موبایل حل میشه) */}
         <div className="p-4 sm:p-6 overflow-y-auto">
           {children}
         </div>

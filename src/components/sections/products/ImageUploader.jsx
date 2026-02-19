@@ -6,9 +6,7 @@ export default function ImageUploader({ value, onChange }) {
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
-    // value می‌تونه File یا URL(string) یا null باشه
     if (!value) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPreview(null);
       return;
     }
@@ -18,7 +16,6 @@ export default function ImageUploader({ value, onChange }) {
       return;
     }
 
-    // File
     try {
       const url = URL.createObjectURL(value);
       setPreview(url);
@@ -46,7 +43,7 @@ export default function ImageUploader({ value, onChange }) {
   return (
     <div className="flex flex-col gap-2 w-full min-w-0">
       <label className="text-xs sm:text-sm md:text-[14px] font-medium text-right py-2">
-        :انتخاب عکس
+        :وێنە هەڵبژێرە
       </label>
 
       <div
@@ -65,7 +62,7 @@ export default function ImageUploader({ value, onChange }) {
           <>
             <img src="/export.svg" alt="" />
             <span className="text-xs sm:text-sm md:text-[14px] text-center">
-              تصویر را بکشید و رها کنید یا کلیک کنید
+              وێنەکە ڕابکێشە و دابنێ یان کلیک بکە
             </span>
           </>
         )}

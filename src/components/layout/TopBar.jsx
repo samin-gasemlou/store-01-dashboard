@@ -1,4 +1,3 @@
-// dashboard/src/components/layout/TopBar.jsx
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAdminUser, logout } from "../../lib/auth.js";
@@ -80,7 +79,7 @@ export default function TopBar() {
             sm:text-[12px]
             md:text-[13px]
           "
-          placeholder="جستجو کنید: نام کاربری / کد سفارش / محصول"
+          placeholder="گەڕان: ناوی بەکارهێنەر / کۆدی سفارش / بەرهەم"
         />
         <img
           src="/search.svg"
